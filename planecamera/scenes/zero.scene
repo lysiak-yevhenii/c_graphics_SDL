@@ -1,0 +1,27 @@
+//Background color set
+//Possible to set default colors: <black>, <white>, <red>
+//<green>, <blue> <--- available in this format.
+//Also color can be setted up as decimal RGB: <255, 255, 255>
+//You can set dec and hex color strictly as shown in 
+//examples. (any abnormality won't work).
+//Color can be setted up as hex; Be attantive any abnormal 
+//form of representation hex will be skipped.
+//Available comments by using at the beginning of the row
+//double slash //
+
+background
+			color: <255, 255, 255>
+			location: <10, 12, 10>
+			direction: <0, 10, 5>
+			angle: -10
+			radius: 2.5	
+Object1
+			color: <255, 255, 255>
+			location: <1, 2, 3>
+background
+			color: <black>	
+Object2
+			color: <0xFF0000>
+Object1
+			color: <blue>
+			
