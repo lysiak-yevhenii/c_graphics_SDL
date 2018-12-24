@@ -2,6 +2,14 @@
 
 // R3 vectors
 
+double				ft_dot(vector_3 v1, vector_3 v2)
+{
+	double		result;
+
+	result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+	return (result); 
+}
+
 double				ft_degree_to_radian(int input_degree)
 {
 	int		radian;

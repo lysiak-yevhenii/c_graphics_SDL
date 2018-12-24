@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/21 16:29:05 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/24 21:17:45 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,41 @@ t_ray			ft_setray(vector_3 camera, vector_3 point)
 	return (ray);
 }
 
+int				ft_hitsphere(t_ray ray)
+{
+	double		radius;
+	vector_3	oc;
+	vector_3	loc;
+	double		a;
+	double		b;
+	double		c;
+	double		discriminant;
+
+	a = 0;
+	b = 0;
+	c = 0;
+	loc.x = -1.0;
+	loc.y = 0.5;
+	loc.z = -1.0;
+	radius = 0.5;
+	oc = ft_subtract_vectors(ray.camera, loc);
+	a = ft_dot(ray.point, ray.point);
+	b = 2.0 * ft_dot(oc, ray.point);
+	c = ft_dot(oc, oc) - radius * radius;
+	discriminant = b * b - 4 * a * c;
+	if (discriminant > 0)
+		return (1);
+	else
+		return (0);
+}
+
 vector_3		ft_color(t_ray ray)
 {
 	float		t;
 	vector_3	point;
 	vector_3	set;
 	vector_3 	unit_direction;
+	vector_3 	to_return;
 
 	set.x = 1.0;
 	set.y = 1.0;
@@ -40,6 +69,13 @@ vector_3		ft_color(t_ray ray)
 	point.x = 0.5;
 	point.y = 0.7;
 	point.z = 1.0;
+	if (ft_hitsphere(ray))
+	{
+		to_return.x = 1;
+		to_return.y = 0;
+		to_return.z = 0;
+		return (to_return);
+	}
 	unit_direction = ft_unit_vector(ray.point);
 	t = 0.5 * (ray.point.y + 1.0);
 	return (ft_add_vectors(ft_multiply_scalar(set, (1.0 - t)), ft_multiply_scalar(point, t))); 
@@ -67,15 +103,15 @@ void			ft_core(t_win *window)
     lower_left_corner.y = -1.0;
    	lower_left_corner.z = -1.0;
 
-	origin.x = -2.0;
-	origin.y = -1.0;
+	origin.x = -1.0;
+	origin.y = 0.5;
 	origin.z = 0.0;
 
 	vertical.x = 0.0;
-	vertical.y = 4.0;      
+	vertical.y = 2.0;      
 	vertical.z = 0.0;
 
-	horizontal.x = 2.0;
+	horizontal.x = 4.0;
 	horizontal.y = 0.0;
 	horizontal.z = 0.0;
 

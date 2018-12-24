@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/20 16:38:30 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/24 21:06:13 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@
 #	include "SDL_ttf.h"
 #	include "SDL_mixer.h"
 
-#define	SCREEN_W 1200
-#define	SCREEN_H 1200
+#define	SCREEN_W 200
+#define	SCREEN_H 100
 
 
 typedef struct
 {
-	float			x;
-	float			y;
-	float			z;
+	double			x;
+	double			y;
+	double			z;
 	uint32_t		color;
 }					vector_3;
 
@@ -79,8 +79,10 @@ void				ft_draw_bpx(int x, int y, size_t color, SDL_Surface *img);
 unsigned int		ft_rgb(int r, int g, int b);
 
 //Vector lib function
+
 double              ft_length(vector_3 v);
 double				ft_degree_to_radian(int input_degree);
+double				ft_dot(vector_3 v1, vector_3 v2);
 vector_3			ft_add_vectors(vector_3 v1, vector_3 v2);
 vector_3            ft_multiply_scalar(vector_3 v1, double scalar);
 vector_3            ft_subtract_vectors(vector_3 v1, vector_3 v2);
