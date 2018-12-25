@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/25 15:18:23 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/25 16:09:02 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int				ft_hitsphere(t_ray ray)
 	b = 2.0 * ft_dot(oc, ray.point);
 	c = ft_dot(oc, oc) - radius * radius;
 	discriminant = b * b - 4 * a * c;
-	if (discriminant > 0)
+	if (discriminant > 0.0)
 		return (1);
 	else
 		return (0);

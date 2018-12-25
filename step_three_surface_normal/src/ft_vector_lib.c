@@ -71,6 +71,35 @@ vector_3			ft_mag_dir_vector(int magnitude, int angle_xy, int	angle_xz)
 	return (result_vector);
 }
 
+vector_3			ft_point_at_parameter(double t, vector_3 c, vector_3 p)
+{
+	vector_3	point;
+
+	point.x = 0;
+	point.y = 0;
+	point.z = 0;
+
+	point.x = c.x + t * p.x;
+	point.y = c.y + t * p.y;
+	point.z = c.z + t * p.z;	
+	return (point);
+}
+
+vector_3			ft_get_point(double	t, vector_3	c, vector_3 p)
+{
+	vector_3	point;
+
+	point.x = 0;
+	point.y = 0;
+	point.z = 0;
+
+	point.x = (1 - t) * c.x + t * p.x;
+	point.y = (1 - t) * c.y + t * p.y;
+	point.z = (1 - t) * c.z + t * p.z;	
+	return (point);
+}
+
+
 double				ft_length(vector_3 v)
 {
 	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));

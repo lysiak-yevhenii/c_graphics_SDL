@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/25 15:18:23 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/25 19:44:47 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_ray			ft_setray(vector_3 camera, vector_3 point)
 	return (ray);
 }
 
-int				ft_hitsphere(t_ray ray)
+double				ft_hitsphere(t_ray ray)
 {
 	double		radius;
 	vector_3	oc;
@@ -49,19 +49,21 @@ int				ft_hitsphere(t_ray ray)
 	b = 2.0 * ft_dot(oc, ray.point);
 	c = ft_dot(oc, oc) - radius * radius;
 	discriminant = b * b - 4 * a * c;
-	if (discriminant > 0)
-		return (1);
+	if (discriminant < 0)
+		return (-1.0);
 	else
-		return (0);
+		return ((-b - sqrt(discriminant))/(2.0 * a));
 }
 
 vector_3		ft_color(t_ray ray)
 {
-	float		t;
+	double		t;
 	vector_3	point;
 	vector_3	set;
 	vector_3 	unit_direction;
 	vector_3 	to_return;
+	vector_3 	n;
+	vector_3	loc;
 
 	set.x = 1.0;
 	set.y = 1.0;
@@ -69,12 +71,18 @@ vector_3		ft_color(t_ray ray)
 	point.x = 0.5;
 	point.y = 0.7;
 	point.z = 1.0;
-	if (ft_hitsphere(ray))
+	loc.x = -1.0;
+	loc.y = 0.5;
+	loc.z = -1.0;
+	t =  ft_hitsphere(ray);
+	if (t > 0)
 	{
-		to_return.x = 1;
-		to_return.y = 0;
-		to_return.z = 0;
-		return (to_return);
+		n = ft_unit_vector(ft_subtract_vectors(ft_point_at_parameter(t, ray.camera, ray.point), loc));
+		to_return.x = n.x + 1;
+		to_return.y = n.y + 1;
+		to_return.z = n.z + 1;
+		n = ft_multiply_scalar(to_return, 0.5);
+		return (n);
 	}
 	unit_direction = ft_unit_vector(ray.point);
 	t = 0.5 * (ray.point.y + 1.0);

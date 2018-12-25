@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/25 15:15:21 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/25 19:05:37 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ unsigned int		ft_rgb(int r, int g, int b);
 double              ft_length(vector_3 v);
 double				ft_degree_to_radian(int input_degree);
 double				ft_dot(vector_3 v1, vector_3 v2);
+vector_3			ft_point_at_parameter(double t, vector_3 c, vector_3 p);
+vector_3			ft_get_point(double t, vector_3 c, vector_3 p);
 vector_3			ft_add_vectors(vector_3 v1, vector_3 v2);
 vector_3            ft_multiply_scalar(vector_3 v1, double scalar);
 vector_3            ft_subtract_vectors(vector_3 v1, vector_3 v2);
