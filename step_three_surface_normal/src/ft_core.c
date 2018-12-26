@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/26 20:21:21 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/26 20:50:25 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ double				ft_hitsphere(t_ray ray)
 		return ((-b - sqrt(discriminant))/(2.0 * a));
 }
 
-vector_3		ft_color(t_ray ray)
+vector_3		ft_color(t_ray ray, t_objects *object)
 {
 	double		t;
 	vector_3	point;
@@ -137,7 +137,7 @@ void			ft_core(t_win *window)
 			u = (float)x / SCREEN_W;
 			v = (float)y / SCREEN_H;
 			ray = ft_setray(origin, ft_add_vectors(ft_add_vectors(lower_left_corner, ft_multiply_scalar(horizontal, u)), ft_multiply_scalar(vertical, v)));
-			vector_3 color = ft_color(ray);
+			vector_3 color = ft_color(ray, window->objects);
 			r = color.x * 255.99;
 			g = color.y * 255.99;
 			b = color.z * 255.99;

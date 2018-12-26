@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/03 20:10:53 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/11 00:33:51 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/26 21:39:54 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void		ft_print_result_parsing_obj(t_win *window)
 	int		i;
 
 	i = 0;
-	while (i < 5)
-	{
 		printf("Name: %s\n", window->objects[i].name);
 		printf("Location: x = %f, y =  %f, z =  %f \n", window->objects[i].pos.x, window->objects[i].pos.y, window->objects[i].pos.z); 
 		printf("Direction: x = %f, y =  %f, z =  %f \n", window->objects[i].dir.x, window->objects[i].dir.y, window->objects[i].dir.z); 
@@ -26,8 +24,6 @@ void		ft_print_result_parsing_obj(t_win *window)
 		printf("Degree: %d\n", window->objects[i].angle);
 		printf("Radius: %f\n", window->objects[i].radius);
 		printf("\n");
-	 	i++;	
-	}
 }
 
 int			main(int ac, char **av)
@@ -45,5 +41,7 @@ int			main(int ac, char **av)
 						ft_core(&window);
 		ft_print_result_parsing_obj(&window);
 	}
+	printf("%f", ft_atoi_double("10"));
+
 	return (0);
 }

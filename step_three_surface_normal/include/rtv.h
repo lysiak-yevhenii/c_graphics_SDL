@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/25 19:05:37 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/26 21:12:47 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ unsigned int		ft_rgb(int r, int g, int b);
 
 //Vector lib function
 
+double				ft_atoi_double(char *strnbr);
 double              ft_length(vector_3 v);
 double				ft_degree_to_radian(int input_degree);
 double				ft_dot(vector_3 v1, vector_3 v2);
