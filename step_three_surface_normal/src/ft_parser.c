@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:10:55 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/11 01:13:16 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/26 20:34:15 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_direction(t_win *window, char *line, int id)
 	{
 		while (*line == ' ')
 			line++;
-		if (ft_isdigit(*line))
+		if (ft_isdigit(*line) || *line == '-')
 		{
 			tmpwl = (point == 2) ? ft_strlen_until(line, '>') :\
 			ft_strlen_until(line, ',');
@@ -57,7 +57,7 @@ void	ft_direction(t_win *window, char *line, int id)
 			tmpdl = ft_nbrlen(nbr);
 			((nbr <= SCREEN_W && nbr >= 100) || (nbr >= 100 && nbr <= SCREEN_H)) ?\
 			printf("Not valid RGB parameter in cell\n") : 0;
-			(tmpwl == tmpdl) ? printf("yes") : printf("no");
+			(tmpwl == tmpdl) ? printf("yes") : printf("Error direction input ");
 			ft_direction_catcher(window, id, nbr);
 		}
 		line += tmpwl + 1;
@@ -70,7 +70,7 @@ void	ft_get_direction(t_win *window, char *line, int id)
 	while (*line != '<' && *line != '\0')
 		line++;
 	line++;
-	if (ft_isdigit(*line))
+	if (ft_isdigit(*line) || *line == '-')
 		ft_direction(window, line, id);	
 }
 
@@ -233,7 +233,7 @@ void	ft_location(t_win *window, char *line, int id)
 	{
 		while (*line == ' ')
 			line++;
-		if (ft_isdigit(*line))
+		if (ft_isdigit(*line) || *line == '-')
 		{
 			tmpwl = (point == 2) ? ft_strlen_until(line, '>') :\
 			ft_strlen_until(line, ',');
@@ -254,7 +254,7 @@ void	ft_get_location(t_win *window, char *line, int id)
 	while (*line != '<' && *line != '\0')
 		line++;
 	line++;
-	if (ft_isdigit(*line))
+	if (ft_isdigit(*line) || *line == '-')
 		ft_location(window, line, id);	
 }
 

@@ -11,8 +11,8 @@
 
 sphere
 			color: <255, 255, 255>
-			location: <0, 0, -1>
-			direction: <0, 10, 5>
+			location: <-10, -20, -1>
+			direction: <0, -10, 5>
 			angle: -10
 			radius: 0.5	
 Object1
