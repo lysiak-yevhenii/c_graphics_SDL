@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:10:55 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/26 21:51:52 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/27 16:12:25 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int					ft_floatpartlen(char *nbr)
 	while (*nbr != '.')
 		nbr++;
 	nbr++;
-	while (*nbr != '\0')
+	while (*nbr != '\0' && *nbr != ',' && *nbr != '>')
 	{
 		counter++;
 		nbr++;
@@ -73,17 +73,21 @@ double				ft_atoi_double(char *strnbr)
 	char		*newstrnbr;
 	double		result;	
 
+	floatlen = 0;
 	strnbrlen = ft_strlen(strnbr);
 	if (ft_float_protection(strnbr))
 		floatlen = ft_floatpartlen(strnbr);
+	if (floatlen == 0)
+		return (ft_atoi_base(strnbr, 10));
 	newstrnbr = (char *)malloc(sizeof(char) * strnbrlen);
 	ft_strcpy_skip_symbol(strnbr, newstrnbr, '.');
 	strnbrlen = ft_atoi_base(newstrnbr, 10);
 	result = ((double)strnbrlen  / ((int)pow(10, floatlen)));
+	free(newstrnbr);
 	return (result);
 }
 
-void				ft_direction_catcher(t_win *window, int id, int nbr)
+void				ft_direction_catcher(t_win *window, int id, double nbr)
 {
 	static int		id_value = -2;
 	static int  	counter;
@@ -107,7 +111,7 @@ void				ft_direction_catcher(t_win *window, int id, int nbr)
 
 void	ft_direction(t_win *window, char *line, int id)
 {
-	int				nbr;
+	double			nbr;
 	int				point;
 	int				tmpwl;
 	int				tmpdl;
@@ -125,9 +129,7 @@ void	ft_direction(t_win *window, char *line, int id)
 			tmpwl = (point == 2) ? ft_strlen_until(line, '>') :\
 			ft_strlen_until(line, ',');
 			nbr = ft_atoi_double(line);
-			tmpdl = ft_nbrlen(nbr);
-			((nbr <= SCREEN_W && nbr >= 100) || (nbr >= 100 && nbr <= SCREEN_H)) ?\
-			printf("Not valid RGB parameter in cell\n") : 0;
+			tmpdl = ft_nbrlen(nbr);	
 			(tmpwl == tmpdl) ? printf("yes") : printf("Error direction input ");
 			ft_direction_catcher(window, id, nbr);
 		}
@@ -308,9 +310,7 @@ void	ft_location(t_win *window, char *line, int id)
 		{
 			tmpwl = (point == 2) ? ft_strlen_until(line, '>') :\
 			ft_strlen_until(line, ',');
-			printf("%s", line);
-			nbr = ft_atoi_double(line);
-			printf("NBR : %f\n", nbr);
+			nbr = ft_atoi_double(line);	
 			tmpdl = ft_nbrlen(nbr);
 			((nbr <= SCREEN_W && nbr >= 100) || (nbr >= 100 && nbr <= SCREEN_H)) ?\
 			printf("Not valid RGB parameter in cell\n") : 0;
