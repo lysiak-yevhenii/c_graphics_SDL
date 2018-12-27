@@ -12,8 +12,8 @@ Intersecting at scene with bunch of Objects
 	return hit;
 
 	Idea the next: our structure has all information about objects. We can store information about distance
-from camera to the object and compare those between group of objects. Then we need to return needed hit infomation which nested (location of intersaction - P, normal vector - N, t - value).
-
+from camera to the object and compare those between group of objects. Then we need to return needed hit infomation which nested (location of intersaction - P, normal vector - N, t - value). This hit info must have lowest t value.
+	Once the nearest to the camera object is found, a shading computation uses the intersection P, N, T and other information to determine the color of the pixel. 
 
 <img width="300" alt="screen shot 2018-12-25 at 3 15 42 pm" src="">
 
