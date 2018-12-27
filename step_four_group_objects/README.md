@@ -23,4 +23,5 @@ Idea the next: our structure has all information about objects. We can store inf
 from camera to the object and compare those between group of objects. Then we need to return needed hit infomation which nested (location of intersaction - P, normal vector - N, t - value). This hit info must have lowest t value.
 Once the nearest to the camera object is found, a shading computation uses the intersection P, N, T and other information to determine the color of the pixel. 
 
+<img width="1199" alt="screen shot 2018-12-25 at 3 15 42 pm" src="https://github.com//Jenuaz/c_graphics_SDL/blob/master/support/Screen%20Shot%202018-12-27%20at%206.jpg?raw=true">
  
