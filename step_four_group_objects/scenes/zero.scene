@@ -1,0 +1,17 @@
+//Background color set
+//Possible to set default colors: <black>, <white>, <red>
+//<green>, <blue> <--- available in this format.
+//Also color can be setted up as decimal RGB: <255, 255, 255>
+//You can set dec and hex color strictly as shown in 
+//examples. (any abnormality won't work).
+//Color can be setted up as hex; Be attantive any abnormal 
+//form of representation hex will be skipped.
+//Available comments by using at the beginning of the row
+//double slash //
+
+sphere
+			color: <255, 255, 255>
+			location: <-1.0, -0.5, -1.0>
+			direction: <-1.0, -10, 5>
+			angle: -10
+			radius: 0.5				
