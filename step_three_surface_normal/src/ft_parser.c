@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:10:55 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/26 21:37:50 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/26 21:51:52 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ double				ft_atoi_double(char *strnbr)
 	newstrnbr = (char *)malloc(sizeof(char) * strnbrlen);
 	ft_strcpy_skip_symbol(strnbr, newstrnbr, '.');
 	strnbrlen = ft_atoi_base(newstrnbr, 10);
-	printf("%d\n", strnbrlen); 
-	printf("%f\n", pow(10, floatlen));	
 	result = ((double)strnbrlen  / ((int)pow(10, floatlen)));
 	return (result);
 }
@@ -126,7 +124,7 @@ void	ft_direction(t_win *window, char *line, int id)
 		{
 			tmpwl = (point == 2) ? ft_strlen_until(line, '>') :\
 			ft_strlen_until(line, ',');
-			nbr = ft_atoi_base(line, 10);
+			nbr = ft_atoi_double(line);
 			tmpdl = ft_nbrlen(nbr);
 			((nbr <= SCREEN_W && nbr >= 100) || (nbr >= 100 && nbr <= SCREEN_H)) ?\
 			printf("Not valid RGB parameter in cell\n") : 0;
@@ -269,7 +267,7 @@ void	ft_get_color(t_win *window, char *line, int id)
 		ft_dec_rgb(window, line, id);	
 }
 
-void				ft_location_catcher(t_win *window, int id, float nbr)
+void				ft_location_catcher(t_win *window, int id, double nbr)
 {
 	static int		id_value = -2;
 	static int  	counter;
@@ -293,7 +291,7 @@ void				ft_location_catcher(t_win *window, int id, float nbr)
 
 void	ft_location(t_win *window, char *line, int id)
 {
-	float			nbr;
+	double			nbr;
 	int				point;
 	int				tmpwl;
 	int				tmpdl;
@@ -310,7 +308,9 @@ void	ft_location(t_win *window, char *line, int id)
 		{
 			tmpwl = (point == 2) ? ft_strlen_until(line, '>') :\
 			ft_strlen_until(line, ',');
-			nbr = (float)ft_atoi_base(line, 10);
+			printf("%s", line);
+			nbr = ft_atoi_double(line);
+			printf("NBR : %f\n", nbr);
 			tmpdl = ft_nbrlen(nbr);
 			((nbr <= SCREEN_W && nbr >= 100) || (nbr >= 100 && nbr <= SCREEN_H)) ?\
 			printf("Not valid RGB parameter in cell\n") : 0;

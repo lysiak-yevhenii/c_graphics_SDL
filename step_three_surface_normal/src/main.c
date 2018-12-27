@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/03 20:10:53 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/26 21:39:54 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/26 21:49:41 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			main(int ac, char **av)
 						ft_core(&window);
 		ft_print_result_parsing_obj(&window);
 	}
-	printf("%f", ft_atoi_double("10"));
+	printf("%f", ft_atoi_double("-1.0000000"));
 
 	return (0);
 }
