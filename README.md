@@ -32,7 +32,7 @@ Structure of our basic program will be the next:
  
     for each pixel do:    
       compute viewing ray
-      find first object hit by ray and its sirface normal n
+      find first object hit by ray and its surface normal n
       set puxel color to value computed from hit point, light , and n
     
     
