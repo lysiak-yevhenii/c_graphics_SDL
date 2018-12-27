@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/26 21:12:47 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/27 17:06:25 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 #define	SCREEN_W 1200
 #define	SCREEN_H 780
 
-
 typedef struct
 {
 	double			x;
@@ -40,6 +39,13 @@ typedef struct
 	double			d;
 }					vector_2;
 
+typedef struct
+{
+	double			t;
+	vector_3		p;
+	vector_3		n;
+}					hit_record;
+
 typedef struct		s_object
 {
 	char			*name;
@@ -48,7 +54,9 @@ typedef struct		s_object
 	double			radius;
 	int				reflaction;
 	int				angle; // in degree
-	unsigned int	color;
+	unsigned int	color;	
+
+	hit_record		hit;
 }					t_objects;
 
 typedef struct		s_ray

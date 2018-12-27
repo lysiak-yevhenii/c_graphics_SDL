@@ -1,11 +1,22 @@
-Surface normals
+Intersecting at scene with bunch of Objects
 --------
- At the beginning we need to get ourselves an surface normal, to make a shade. In three dimensions, a surface normal, or simply normal, to a surface at a point P is a vector that is perpendicular to the tangent plane to that surface at P. The word "normal" is also used as an adjective: a line normal to a plane, the normal component of a force, the normal vector, etc.
+	To implement new bunch of objects we need to know which exactly object we intersected. So when we intersect a ray with the scene we must find only closest intersected object point relativly the camera along the ray. Main idea that we going to review all objects for intersection. If we intersect all of them or few of them we need to compare that objects to find closest intersection (smallest t value); When we got that smallest value we can draw the pixel on the screen in right color (color of object).
+	
+	Pseudo code: (interval t in (t0, t1))
+	hit = 0;
+	for each OBJECT int the GROUP do
+		if (OBJECT hited by ray at ray parameter t and t in interval[t0, t1]) then
+			hit = 1;
+			objecthited = OBJECT;
+			t1 = t;					// here we find distance to hited object;
+	return hit;
 
-<img width="300" alt="screen shot 2018-12-25 at 3 15 42 pm" src="https://upload.wikimedia.org/wikipedia/commons/1/10/Reflection_angles.svg">
+	Idea the next: our structure has all information about objects. We can store information about distance
+from camera to the object and compare those between group of objects. Then we need to return needed hit infomation which nested (location of intersaction - P, normal vector - N, t - value).
 
- To be more precise and understandable normal vector is vecotr that perpendicular to the surface, and points out. By convention lenght of normals vectors equal to unit length. We won't enforce that in the code. This can cause to bugs but 
- we got what we got. For the sphere, the normal is in the direction of the hitpoint minus the center:
+
+<img width="300" alt="screen shot 2018-12-25 at 3 15 42 pm" src="">
+
  
- <img width="300" alt="screen shot 2018-12-25 at 3 15 42 pm" src="http://cosinekitty.com/raytrace/figure_6_2_spherenorm.png">
+ <img width="300" alt="screen shot 2018-12-25 at 3 15 42 pm" src="">
  
