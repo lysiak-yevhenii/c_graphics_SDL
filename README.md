@@ -28,6 +28,14 @@ A basic ray tracer has three parts:
 2. Ray intersection - to find intersection with object on the scene and find the closest one. 
 3. Shading - computation the pixel color based on the result of ray intersection. (We will have a sctructure: hit_record; with all neaded info).
 
+Structure of our basic program will be the next:
+ 
+    for each pixel do:    
+      compute viewing ray
+      find first object hit by ray and its sirface normal n
+      set puxel color to value computed from hit point, light , and n
+    
+    
 
 Literature:
 ---
