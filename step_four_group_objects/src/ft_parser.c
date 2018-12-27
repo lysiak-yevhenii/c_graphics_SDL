@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:10:55 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/27 16:12:25 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/27 20:58:19 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int					ft_floatpartlen(char *nbr)
 	while (*nbr != '.')
 		nbr++;
 	nbr++;
-	while (*nbr != '\0' && *nbr != ',' && *nbr != '>')
+	while (*nbr != '\0' && *nbr != ',' && *nbr != '>' && *nbr != ' ' && ft_isdigit(*nbr))
 	{
 		counter++;
 		nbr++;
@@ -364,7 +364,7 @@ void	ft_radius(t_win *window, char *line, int id)
 	{
 		if (ft_isdigit(*line))
 		{
-			window->objects[id].radius = ft_atoi(line);
+			window->objects[id].radius = ft_atoi_double(line);
 			line += ft_strlen_until(line, ' ') - 1;
 		}
 		line++;
@@ -395,7 +395,7 @@ void	ft_parameter(t_win *window, char *line, int *id)
 			ft_get_direction(window, line, *id);
 		if (ft_strncmp(line, "angle", ft_strlen_until(line, ':')) == 0)
 			ft_get_angle(window, line, *id);
-		if (ft_strncmp(line, "radius", ft_strlen_until(line, ':')) == 0)
+		if (ft_strncmp(line, "radius", ft_strlen_until(line, ':')) == 0)	
 			ft_get_radius(window, line, *id);
 	}	
 }

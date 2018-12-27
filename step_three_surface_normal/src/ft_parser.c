@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:10:55 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/27 16:15:37 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/27 20:45:22 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int					ft_floatpartlen(char *nbr)
 	while (*nbr != '.')
 		nbr++;
 	nbr++;
-	while (*nbr != '\0' && *nbr != ',' && *nbr != '>')
+	while (*nbr != '\0' && *nbr != ',' && *nbr != '>' && *nbr != ' ') 
 	{
 		counter++;
 		nbr++;
@@ -81,6 +81,7 @@ double				ft_atoi_double(char *strnbr)
 		return (ft_atoi_base(strnbr, 10));
 	newstrnbr = (char *)malloc(sizeof(char) * strnbrlen);
 	ft_strcpy_skip_symbol(strnbr, newstrnbr, '.');
+	printf(" HELLO \n%s\n", newstrnbr);
 	strnbrlen = ft_atoi_base(newstrnbr, 10);
 	result = ((double)strnbrlen  / ((int)pow(10, floatlen)));
 	free(newstrnbr);
