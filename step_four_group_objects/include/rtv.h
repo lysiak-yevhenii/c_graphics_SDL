@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/27 20:45:55 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/28 20:16:07 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
 
 #define	SCREEN_W 1200
 #define	SCREEN_H 780
+
+typedef	struct
+{
+	double			a;
+	double			b;
+	double			c;
+	double			discriminant;
+}					square_equation;
 
 typedef struct
 {
@@ -49,6 +57,7 @@ typedef struct
 typedef struct		s_object
 {
 	char			*name;
+	void			*inter_fun;
 	vector_3		pos; //object location 
 	vector_3		dir; //for camera and plane
 	double			radius;
@@ -70,6 +79,7 @@ typedef struct		s_win
 	SDL_Window		*window;
 	SDL_Surface		*main_surface;
 	SDL_Surface		*operate_surface;
+	t_objects		camera;
 	t_objects		*objects;
 	uint32_t		*operate_pix;
 }					t_win;
@@ -92,6 +102,11 @@ double				ft_atoi_double(char *strnbr);
 double              ft_length(vector_3 v);
 double				ft_degree_to_radian(int input_degree);
 double				ft_dot(vector_3 v1, vector_3 v2);
+
+//intersection functions
+
+double				sphere(t_ray ray, t_objects *object);
+
 vector_3			ft_point_at_parameter(double t, vector_3 c, vector_3 p);
 vector_3			ft_get_point(double t, vector_3 c, vector_3 p);
 vector_3			ft_add_vectors(vector_3 v1, vector_3 v2);

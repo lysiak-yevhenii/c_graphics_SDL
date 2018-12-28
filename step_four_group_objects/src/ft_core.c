@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/27 20:29:13 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/28 20:44:50 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,23 @@ t_ray			ft_setray(vector_3 camera, vector_3 point)
 	return (ray);
 }
 
-double				ft_hitsphere(t_ray ray)
+void			ft_iter(t_ray ray, t_objects *obj, double (*f)(t_ray, t_objects *))
 {
-	double		radius;
-	vector_3	oc;
-	vector_3	loc;
-	double		a;
-	double		b;
-	double		c;
-	double		discriminant;
-
-	a = 0;
-	b = 0;
-	c = 0;
-	loc.x = -1.0;
-	loc.y = 0.5;
-	loc.z = -1.0;
-	radius = 0.5;
-	oc = ft_subtract_vectors(ray.camera, loc);
-	a = ft_dot(ray.point, ray.point);
-	b = 2.0 * ft_dot(oc, ray.point);
-	c = ft_dot(oc, oc) - radius * radius;
-	discriminant = b * b - 4 * a * c;
-	if (discriminant < 0)
-		return (-1.0);
-	else
-		return ((-b - sqrt(discriminant))/(2.0 * a));
+		obj->hit.t = (*f)(ray, obj);
 }
 
-vector_3		ft_color(t_ray ray, t_objects *object)
+double			ft_closer_obj(t_ray ray, t_win *window)
+{
+	double	t;
+	void	*fuck;
+
+	fuck = sphere;
+	ft_iter(ray, &window->objects[0], window->objects[0].inter_fun);	
+	t = window->objects[0].hit.t;
+	return (t);
+}	
+
+vector_3		ft_color(t_ray ray, t_win	*window)
 {
 	double		t;
 	vector_3	point;
@@ -71,13 +59,11 @@ vector_3		ft_color(t_ray ray, t_objects *object)
 	point.x = 0.5;
 	point.y = 0.7;
 	point.z = 1.0;
-	loc.x = -1.0;
-	loc.y = 0.5;
-	loc.z = -1.0;
-	t =  ft_hitsphere(ray);
+	
+	t = ft_closer_obj(ray, window);
 	if (t > 0)
 	{
-		n = ft_unit_vector(ft_subtract_vectors(ft_point_at_parameter(t, ray.camera, ray.point), loc));
+		n = ft_unit_vector(ft_subtract_vectors(ft_point_at_parameter(t, ray.camera, ray.point), window->objects[0].pos));
 		to_return.x = n.x + 1;
 		to_return.y = n.y + 1;
 		to_return.z = n.z + 1;
@@ -111,10 +97,6 @@ void			ft_core(t_win *window)
     lower_left_corner.y = -1.0;
    	lower_left_corner.z = -1.0;
 
-	origin.x = -1.0;
-	origin.y = 0.5;
-	origin.z = 0.0;
-
 	vertical.x = 0.0;
 	vertical.y = 2.0;      
 	vertical.z = 0.0;
@@ -136,8 +118,8 @@ void			ft_core(t_win *window)
 		{
 			u = (float)x / SCREEN_W;
 			v = (float)y / SCREEN_H;
-			ray = ft_setray(origin, ft_add_vectors(ft_add_vectors(lower_left_corner, ft_multiply_scalar(horizontal, u)), ft_multiply_scalar(vertical, v)));
-			vector_3 color = ft_color(ray, window->objects);
+			ray = ft_setray(window->camera.pos, ft_add_vectors(ft_add_vectors(lower_left_corner, ft_multiply_scalar(horizontal, u)), ft_multiply_scalar(vertical, v)));
+			vector_3 color = ft_color(ray, window);
 			r = color.x * 255.99;
 			g = color.y * 255.99;
 			b = color.z * 255.99;

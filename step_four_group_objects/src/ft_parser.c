@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:10:55 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/27 20:58:19 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/28 17:29:17 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -400,15 +400,60 @@ void	ft_parameter(t_win *window, char *line, int *id)
 	}	
 }
 
+void	ft_location_camera(t_win *window, char *line)
+{
+	double		nbr;
+	int			point;
+	int			tmpwl;
+
+	nbr = 0.0;
+	point = 0;
+	while (*line != '\0' && *line != '>')
+	{
+		while (*line == ' ')
+			line++;
+		if (ft_isdigit(*line) || *line == '-')
+		{
+			tmpwl = (point == 2) ? ft_strlen_until(line, '>') : \
+			ft_strlen_until(line, ',');
+			nbr = ft_atoi_double(line);
+			(point == 0) ? window->camera.pos.x = nbr : 0;
+			(point == 1) ? window->camera.pos.y = nbr : 0;
+			(point == 2) ? window->camera.pos.z = nbr : 0;
+		}
+		line += tmpwl + 1;
+		point++;
+	}
+
+}	
+
+void	ft_get_location_for_camera(t_win *window, char *line)
+{
+	while (*line != '<' && *line != '\0')
+		line++;
+	line++;
+	printf("HERE %s\n", line);
+	if (ft_isdigit(*line) || *line == '-')
+		ft_location_camera(window, line);
+}
+
+void	ft_camera_param(t_win *window, char *line)
+{
+	while (*line == 9)
+		line++;
+	if (ft_isalpha(*line))
+	{
+		printf("HERE");
+		if (ft_strncmp(line, "location", ft_strlen_until(line, ':')) == 0)
+			ft_get_location_for_camera(window, line);
+	}
+}
+
 void	ft_name(t_win *window, char *line, int id)
 {
-	int		i;
-
-	i = 0;
 	window->objects[id].name = (char*)malloc(sizeof(char) * ft_strlen_until(line, ' '));
 	ft_bzero(window->objects[id].name, sizeof(ft_strlen_until(line, ' ')));
 	ft_memcpy(window->objects[id].name, line, ft_strlen_until(line, ' '));
-
 }
 
 int		ft_parsing(t_win *window, char *input)
@@ -420,18 +465,21 @@ int		ft_parsing(t_win *window, char *input)
 	fd = 0;
 	id = -1;
 	line = NULL;
+	window->camera.color = 0;
 	if ((fd = open(input, O_RDONLY)) == -1)
 		return (0);
 	while (get_next_line(fd, &line))
-	{
-		if (ft_isalpha(*line))
+	{	
+		if (ft_isalpha(*line) && ft_strncmp(line, "camera", ft_strlen_until(line, ' ')))
 		{
 			id++;
 			ft_name(window, line, id);
 		}
-		if (*line == 9)
+		if (*line == 9 && window->objects[0].name != NULL)
 			ft_parameter(window, line, &id);
-		
+		else if (*line == 9)
+			ft_camera_param(window, line);
+		free(line);
 	}
 	return (1);
 }

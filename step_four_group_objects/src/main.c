@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/03 20:10:53 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/26 21:49:41 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/28 20:08:11 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ void		ft_print_result_parsing_obj(t_win *window)
 		printf("Degree: %d\n", window->objects[i].angle);
 		printf("Radius: %f\n", window->objects[i].radius);
 		printf("\n");
+
+		printf("Camera pos x: %f\n", window->camera.pos.x);
+		printf("Camera pos y: %f\n", window->camera.pos.y);
+		printf("Camera pos z: %f\n", window->camera.pos.z);
+
+}
+
+void		ft_distirbutor(t_win *window)
+{
+	if (ft_strcmp(window->objects[0].name, "sphere") == 0)
+		window->objects[0].inter_fun = sphere;
+	else
+		printf("Error");	
 }
 
 int			main(int ac, char **av)
@@ -37,11 +50,12 @@ int			main(int ac, char **av)
 		if ((objects_mount = ft_count_objects(av[1])))
 			if (ft_create_objects(&window, objects_mount))
 				if (ft_parsing(&window, av[1]))
-					if (ft_init_sdl(&window)) 
+					if (ft_init_sdl(&window))
+					{
+						ft_distirbutor(&window);
 						ft_core(&window);
-		ft_print_result_parsing_obj(&window);
+					}
+			ft_print_result_parsing_obj(&window);
 	}
-	printf("%f", ft_atoi_double("-1.0000000"));
-
 	return (0);
 }
