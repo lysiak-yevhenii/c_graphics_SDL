@@ -6,6 +6,14 @@ I think my help will be in next thing I will provide to you all external materia
 to finish this course. I studying all this info from "Ray Tracing in One Weekend" Peter Shirley. But he 
 provide all information on C++ language and some kind of .ppm format to visualize result of work of his program 
 instead of his method I will use SDL. 
+By the way you need to preinstall needed SDL framework on your PC. It can be done on you MacOS by using "brew".
+So do the next: 
+    brew install sdl2 && brew install sdl2_mixer && brew install sdl2_ttf && brew install sdl2_image
+Then in home folder you will find:
+    cd ~/.brew/Cellar
+next folders sdl2 , sdl2_ttf (all those what we installed by previouse command:
+    cp {all those folders} in your project. (copy);
+And you can git clone one of presented projects in this repository (cp {all your folders from Cellar related to SDL} and replace in cloned project all folder in sdl folder. In simple words just replace folders inside sdl folder of project by your cellar sdl folders.
 
 The basic ray-tracing algorightm
 ----
