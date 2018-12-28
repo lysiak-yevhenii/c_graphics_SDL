@@ -40,4 +40,5 @@ Structure of our basic program will be the next:
 Literature:
 ---
 Raytracing concept and how to calculate the ray: https://www.khanacademy.org/partner-content/pixar/rendering/rendering1/a/start-here-rendering
-http://cosinekitty.com/raytrace/contents.html
+
+All needed info about RT in one place: http://cosinekitty.com/raytrace/contents.html
