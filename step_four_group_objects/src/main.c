@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/03 20:10:53 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/28 20:08:11 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/29 21:32:53 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int			main(int ac, char **av)
 	ft_bzero(&window, sizeof(t_win));
 	if (ac == 2)
 	{
-		if ((objects_mount = ft_count_objects(av[1])))
-			if (ft_create_objects(&window, objects_mount))
+		if ((window.objects_amount = ft_count_objects(av[1])))
+			if (ft_create_objects(&window))
 				if (ft_parsing(&window, av[1]))
 					if (ft_init_sdl(&window))
 					{

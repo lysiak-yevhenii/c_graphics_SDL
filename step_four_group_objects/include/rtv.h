@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/28 20:16:07 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/29 21:32:25 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,14 @@ typedef struct		s_win
 	SDL_Surface		*operate_surface;
 	t_objects		camera;
 	t_objects		*objects;
+
+	int				objects_amount;
 	uint32_t		*operate_pix;
 }					t_win;
 
 int				ft_parsing(t_win *window, char *input);
 int				ft_count_objects(char *input);
-int				ft_create_objects(t_win *window, int mount);
+int				ft_create_objects(t_win *window);
 void			ft_core(t_win *window);
 
 //SDL initialize connection with CPU and allocate window

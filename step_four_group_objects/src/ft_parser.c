@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:10:55 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/28 17:29:17 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/29 21:33:36 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -484,12 +484,12 @@ int		ft_parsing(t_win *window, char *input)
 	return (1);
 }
 
-int		ft_create_objects(t_win *window, int mount)
+int		ft_create_objects(t_win *window)
 {
 	//HERE NEED TO BE BZERED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	window->objects = (t_objects *)malloc(sizeof(t_objects) * mount);
+	window->objects = (t_objects *)malloc(sizeof(t_objects) * window->objects_amount);
 	if (window->objects != NULL)
 		return (1);
 	else
