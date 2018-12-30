@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/29 21:32:25 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/30 19:57:24 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ typedef struct		s_win
 	SDL_Surface		*operate_surface;
 	t_objects		camera;
 	t_objects		*objects;
-
+	SDL_Event		controller;
+	const Uint8		*currentkeystates;
+	int				statement;
 	int				objects_amount;
 	uint32_t		*operate_pix;
 }					t_win;
@@ -108,7 +110,7 @@ double				ft_dot(vector_3 v1, vector_3 v2);
 //intersection functions
 
 double				sphere(t_ray ray, t_objects *object);
-
+double				plane(t_ray ray, t_objects *object);
 vector_3			ft_point_at_parameter(double t, vector_3 c, vector_3 p);
 vector_3			ft_get_point(double t, vector_3 c, vector_3 p);
 vector_3			ft_add_vectors(vector_3 v1, vector_3 v2);
@@ -117,6 +119,9 @@ vector_3            ft_subtract_vectors(vector_3 v1, vector_3 v2);
 vector_3            ft_unit_vector(vector_3 v);
 vector_3            ft_mag_dir_vector(int magnitude, int angle_xy, int angle_xz);
 
+//Controller
+void				ft_keyevent_up(t_win *widnow);
+void				ft_keyevent_down(t_win *window);
 
 void				ft_error_init_window(void);
 void				ft_error_render_quality(void);

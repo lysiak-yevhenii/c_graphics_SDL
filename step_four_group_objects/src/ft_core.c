@@ -6,17 +6,11 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/28 20:44:50 by ylisyak          ###   ########.fr       */
+/*   Updated: 2018/12/30 20:32:59 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rtv.h"
-
-void		ft_pixel_to_canvas(int x, int y, vector_3 d)
-{
-	
-}
-
 
 t_ray			ft_setray(vector_3 camera, vector_3 point)
 {
@@ -34,13 +28,24 @@ void			ft_iter(t_ray ray, t_objects *obj, double (*f)(t_ray, t_objects *))
 
 double			ft_closer_obj(t_ray ray, t_win *window)
 {
+	int		obj_iter;
 	double	t;
-	void	*fuck;
+	double	t_closest;
 
-	fuck = sphere;
-	ft_iter(ray, &window->objects[0], window->objects[0].inter_fun);	
-	t = window->objects[0].hit.t;
-	return (t);
+	t_closest = 10;
+	obj_iter = 0;
+	t = 0;
+	while (obj_iter < window->objects_amount - 1)
+	{
+		ft_iter(ray, &window->objects[obj_iter], window->objects[obj_iter].inter_fun);
+		if (t_closest > t)
+		{
+			t = window->objects[obj_iter].hit.t;
+			t_closest = t;
+		}
+		obj_iter++;
+	}	
+	return (t_closest);
 }	
 
 vector_3		ft_color(t_ray ray, t_win	*window)
@@ -75,6 +80,24 @@ vector_3		ft_color(t_ray ray, t_win	*window)
 	return (ft_add_vectors(ft_multiply_scalar(set, (1.0 - t)), ft_multiply_scalar(point, t))); 
 }
 
+
+void		ft_move(t_win *window)
+{
+	if (window->currentkeystates[SDL_SCANCODE_W]) 	
+		window->objects[0].pos.y += 0.1;
+	if (window->currentkeystates[SDL_SCANCODE_S]) 	
+		window->objects[0].pos.y -= 0.1;
+	if (window->currentkeystates[SDL_SCANCODE_Q]) 	
+		window->objects[0].pos.z += 0.1;
+	if (window->currentkeystates[SDL_SCANCODE_E]) 	
+		window->objects[0].pos.z -= 0.1;
+	if (window->currentkeystates[SDL_SCANCODE_D]) 	
+		window->objects[0].pos.x += 0.1;
+	if (window->currentkeystates[SDL_SCANCODE_A]) 	
+		window->objects[0].pos.x -= 0.1;
+}
+
+
 void			ft_core(t_win *window)
 {
 	float 		u;
@@ -93,43 +116,59 @@ void			ft_core(t_win *window)
 	vector_3	horizontal;
 	vector_3	lower_left_corner;
 	
-	lower_left_corner.x = -2.0;
-    lower_left_corner.y = -1.0;
-   	lower_left_corner.z = -1.0;
+	lower_left_corner.x = -1.0;
+    lower_left_corner.y = -0.5;
+   	lower_left_corner.z = -0.5;
 
 	vertical.x = 0.0;
-	vertical.y = 2.0;      
+	vertical.y = 1.0;      
 	vertical.z = 0.0;
 
-	horizontal.x = 4.0;
+	horizontal.x = 2.0;
 	horizontal.y = 0.0;
 	horizontal.z = 0.0;
 
 	window->operate_surface = SDL_CreateRGBSurface(0, \
 			SCREEN_W, SCREEN_H, 32, 0, 0, 0, 0);
 	window->operate_pix = window->operate_surface->pixels;
-	x = 0;
-	dy = 0;
-	y = SCREEN_H - 1;
-	while (y >= 0)
+	window->statement = 1;
+	while (window->statement)
 	{
-		x = 0;
-		while (x < SCREEN_W)
+		if (SDL_WaitEvent(&window->controller))
 		{
-			u = (float)x / SCREEN_W;
-			v = (float)y / SCREEN_H;
-			ray = ft_setray(window->camera.pos, ft_add_vectors(ft_add_vectors(lower_left_corner, ft_multiply_scalar(horizontal, u)), ft_multiply_scalar(vertical, v)));
-			vector_3 color = ft_color(ray, window);
-			r = color.x * 255.99;
-			g = color.y * 255.99;
-			b = color.z * 255.99;
-			window->operate_pix[x + dy * SCREEN_W] = ft_rgb(b, g, r);
-			x++;
+			(window->controller.type == SDL_QUIT || \
+		window->controller.key.keysym.scancode == SDL_SCANCODE_ESCAPE) ? \
+							(window->statement = 0) : 0;
 		}
-		y--;
-		dy++;
+		window->currentkeystates = SDL_GetKeyboardState(NULL);
+		(window->currentkeystates[SDL_SCANCODE_W] || \
+		window->currentkeystates[SDL_SCANCODE_S] || \
+		window->currentkeystates[SDL_SCANCODE_D] || \
+		window->currentkeystates[SDL_SCANCODE_A] ||
+			window->currentkeystates[SDL_SCANCODE_E] ||
+				window->currentkeystates[SDL_SCANCODE_Q] ) ? ft_move(window) : 0;
+		x = 0;
+		dy = 0;
+		y = SCREEN_H - 1;
+		while (y >= 0)
+		{
+			x = 0;
+			while (x < SCREEN_W)
+			{
+				u = (float)x / SCREEN_W;
+				v = (float)y / SCREEN_H;
+				ray = ft_setray(window->camera.pos, ft_add_vectors(ft_add_vectors(lower_left_corner, ft_multiply_scalar(horizontal, u)), ft_multiply_scalar(vertical, v)));
+				vector_3 color = ft_color(ray, window);
+				r = color.x * 255.99;
+				g = color.y * 255.99;
+				b = color.z * 255.99;
+				window->operate_pix[x + dy * SCREEN_W] = ft_rgb(b, g, r);
+				x++;
+			}
+			y--;
+			dy++;
+		}
+		SDL_BlitSurface(window->operate_surface, NULL, window->main_surface, NULL);
+		SDL_UpdateWindowSurface(window->window);
 	}
-	SDL_BlitSurface(window->operate_surface, NULL, window->main_surface, NULL);
-	SDL_UpdateWindowSurface(window->window);
-	SDL_Delay(10000);
 }
