@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/03 20:10:53 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/01/03 19:18:50 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/01/03 19:23:54 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,19 @@ void		ft_print_result_parsing_obj(t_win *window)
 
 void		ft_distirbutor(t_win *window)
 {
-	if (ft_strcmp(window->objects[0].name, "sphere") == 0)
-		window->objects[0].inter_fun = sphere;
-	if (ft_strcmp(window->objects[1].name, "sphere") == 0)
-		window->objects[1].inter_fun = sphere;
-//	if (ft_strcmp(window->objects[1].name, "plane") == 0)
-//		window->objects[1].inter_fun = plane;
-	else
-		printf("Error");	
+	int			obj_iter;
+
+	obj_iter = 0;
+	while (obj_iter < window->objects_amount - 1)
+	{
+		if (ft_strcmp(window->objects[obj_iter].name, "sphere") == 0)
+			window->objects[obj_iter].inter_fun = sphere;
+		if (ft_strcmp(window->objects[obj_iter].name, "plane") == 0)
+			window->objects[obj_iter].inter_fun = plane;
+		else
+			printf("Error");
+		obj_iter++;
+	}	
 }
 
 int			main(int ac, char **av)
