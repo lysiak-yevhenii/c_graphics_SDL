@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/03 20:10:53 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/30 20:29:43 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/01/03 19:18:50 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ void		ft_distirbutor(t_win *window)
 {
 	if (ft_strcmp(window->objects[0].name, "sphere") == 0)
 		window->objects[0].inter_fun = sphere;
-//	if (ft_strcmp(window->objects[0].name, "plane") == 0)
-//		window->objects[0].inter_fun = plane;
+	if (ft_strcmp(window->objects[1].name, "sphere") == 0)
+		window->objects[1].inter_fun = sphere;
+//	if (ft_strcmp(window->objects[1].name, "plane") == 0)
+//		window->objects[1].inter_fun = plane;
 	else
 		printf("Error");	
 }

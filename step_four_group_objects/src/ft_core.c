@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/30 20:32:59 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/01/03 19:16:58 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,47 @@ t_ray			ft_setray(vector_3 camera, vector_3 point)
 	return (ray);
 }
 
-void			ft_iter(t_ray ray, t_objects *obj, double (*f)(t_ray, t_objects *))
+int			ft_iter(t_ray *ray, t_objects *obj, int (*f)(t_ray, t_objects *))
 {
-		obj->hit.t = (*f)(ray, obj);
+	return ((*f)(*ray, obj));
 }
 
-double			ft_closer_obj(t_ray ray, t_win *window)
+int			ft_closer_obj(t_ray ray, t_win *window)
 {
-	int		obj_iter;
-	double	t;
-	double	t_closest;
-
-	t_closest = 10;
-	obj_iter = 0;
-	t = 0;
+	hit_record	tmp_rec;
+	int			obj_iter;
+	double		hit;
+	double		t_closest;
+	double		t_max;
+	
+	hit = 0;
+	ray.t_max = 100.0;
+	ray.t_min = 0.0;
+	obj_iter = 0;	
 	while (obj_iter < window->objects_amount - 1)
 	{
-		ft_iter(ray, &window->objects[obj_iter], window->objects[obj_iter].inter_fun);
-		if (t_closest > t)
-		{
-			t = window->objects[obj_iter].hit.t;
-			t_closest = t;
-		}
+		ft_iter(&ray, &window->objects[obj_iter], window->objects[obj_iter].inter_fun);
 		obj_iter++;
+	}
+	while (obj_iter--)
+	{
+		if (window->objects[obj_iter].hit.t < ray.t_max && window->objects[obj_iter].hit.true_fals == 1)
+		{
+			ray.t_max = window->objects[obj_iter].hit.t;
+			window->iter_closer = obj_iter;
+			hit = 1;
+		}
 	}	
-	return (t_closest);
+	return (hit);
 }	
 
 vector_3		ft_color(t_ray ray, t_win	*window)
 {
 	double		t;
+
 	vector_3	point;
 	vector_3	set;
+
 	vector_3 	unit_direction;
 	vector_3 	to_return;
 	vector_3 	n;
@@ -64,17 +73,17 @@ vector_3		ft_color(t_ray ray, t_win	*window)
 	point.x = 0.5;
 	point.y = 0.7;
 	point.z = 1.0;
-	
-	t = ft_closer_obj(ray, window);
-	if (t > 0)
+	if (ft_closer_obj(ray, window))
 	{
-		n = ft_unit_vector(ft_subtract_vectors(ft_point_at_parameter(t, ray.camera, ray.point), window->objects[0].pos));
+		t = window->objects[window->iter_closer].hit.t;
+		n = ft_unit_vector(ft_subtract_vectors(ft_point_at_parameter(t, ray.camera, ray.point), window->objects[window->iter_closer].pos));
 		to_return.x = n.x + 1;
 		to_return.y = n.y + 1;
 		to_return.z = n.z + 1;
 		n = ft_multiply_scalar(to_return, 0.5);
 		return (n);
 	}
+	t = ray.t_max;
 	unit_direction = ft_unit_vector(ray.point);
 	t = 0.5 * (ray.point.y + 1.0);
 	return (ft_add_vectors(ft_multiply_scalar(set, (1.0 - t)), ft_multiply_scalar(point, t))); 
@@ -139,7 +148,7 @@ void			ft_core(t_win *window)
 			(window->controller.type == SDL_QUIT || \
 		window->controller.key.keysym.scancode == SDL_SCANCODE_ESCAPE) ? \
 							(window->statement = 0) : 0;
-		}
+		
 		window->currentkeystates = SDL_GetKeyboardState(NULL);
 		(window->currentkeystates[SDL_SCANCODE_W] || \
 		window->currentkeystates[SDL_SCANCODE_S] || \
@@ -147,6 +156,8 @@ void			ft_core(t_win *window)
 		window->currentkeystates[SDL_SCANCODE_A] ||
 			window->currentkeystates[SDL_SCANCODE_E] ||
 				window->currentkeystates[SDL_SCANCODE_Q] ) ? ft_move(window) : 0;
+		(window->currentkeystates[SDL_SCANCODE_P]) ? (window->statement = 0) : 0;
+		}
 		x = 0;
 		dy = 0;
 		y = SCREEN_H - 1;
@@ -157,7 +168,10 @@ void			ft_core(t_win *window)
 			{
 				u = (float)x / SCREEN_W;
 				v = (float)y / SCREEN_H;
-				ray = ft_setray(window->camera.pos, ft_add_vectors(ft_add_vectors(lower_left_corner, ft_multiply_scalar(horizontal, u)), ft_multiply_scalar(vertical, v)));
+				ray = ft_setray(window->camera.pos, \
+				ft_add_vectors(ft_add_vectors(lower_left_corner,\
+				ft_multiply_scalar(horizontal, u)),\
+				ft_multiply_scalar(vertical, v)));
 				vector_3 color = ft_color(ray, window);
 				r = color.x * 255.99;
 				g = color.y * 255.99;
@@ -170,5 +184,6 @@ void			ft_core(t_win *window)
 		}
 		SDL_BlitSurface(window->operate_surface, NULL, window->main_surface, NULL);
 		SDL_UpdateWindowSurface(window->window);
+	
 	}
 }

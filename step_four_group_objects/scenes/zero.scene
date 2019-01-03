@@ -11,10 +11,22 @@
 
 camera
 			location: <0.0, 0.0, 0.0>
+
 sphere
 			color: <255, 255, 255>
 			location: <0.0, 0.0, -1.0>
 			direction: <-1.0, -10, 5>
 			angle: -10
 			radius: 0.5
-				
+
+sphere
+			color: <255, 255, 255>
+			location: <1.0, 1.0, -1.0>
+			direction: <-1.0, -10, 5>
+			angle: -10
+			radius: 0.5
+
+
+//plane
+//			location: <0.0, -2.0, -1.0>
+			
