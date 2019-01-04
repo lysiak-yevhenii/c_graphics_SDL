@@ -40,6 +40,15 @@ sphere
 			angle: -10
 			radius: 0.5
 
-//plane
-//			location: <0.0, -2.0, -1.0>
-			
+plane
+			location: <0.0, 0.0, -1.0>
+			direction: <0.0, 0.1, 1.0>
+
+plane
+			location: <-0.5, 0.0, -1.0>
+			direction: <0.1, 0.0, 0.0>
+
+plane
+			location: <0.5, 0.0, -1.0>
+			direction: <-0.1, 0.0, 0.0>
+

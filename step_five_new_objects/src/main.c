@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/03 20:10:53 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/01/03 19:23:54 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/01/04 22:02:43 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void		ft_print_result_parsing_obj(t_win *window)
 	int		i;
 
 	i = 0;
+	while (i < window->objects_amount - 1)
+	{
 		printf("Name: %s\n", window->objects[i].name);
 		printf("Location: x = %f, y =  %f, z =  %f \n", window->objects[i].pos.x, window->objects[i].pos.y, window->objects[i].pos.z); 
 		printf("Direction: x = %f, y =  %f, z =  %f \n", window->objects[i].dir.x, window->objects[i].dir.y, window->objects[i].dir.z); 
@@ -28,7 +30,8 @@ void		ft_print_result_parsing_obj(t_win *window)
 		printf("Camera pos x: %f\n", window->camera.pos.x);
 		printf("Camera pos y: %f\n", window->camera.pos.y);
 		printf("Camera pos z: %f\n", window->camera.pos.z);
-
+		i++;
+	}
 }
 
 void		ft_distirbutor(t_win *window)

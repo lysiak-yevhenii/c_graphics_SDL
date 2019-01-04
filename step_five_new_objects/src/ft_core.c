@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/01/03 19:16:58 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/01/04 20:05:03 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,17 @@ vector_3		ft_color(t_ray ray, t_win	*window)
 void		ft_move(t_win *window)
 {
 	if (window->currentkeystates[SDL_SCANCODE_W]) 	
-		window->objects[0].pos.y += 0.1;
+		window->objects[4].dir.y += 0.3;
 	if (window->currentkeystates[SDL_SCANCODE_S]) 	
-		window->objects[0].pos.y -= 0.1;
+		window->objects[4].dir.y -= 0.3;
 	if (window->currentkeystates[SDL_SCANCODE_Q]) 	
-		window->objects[0].pos.z += 0.1;
+		window->objects[4].dir.z += 0.3;
 	if (window->currentkeystates[SDL_SCANCODE_E]) 	
-		window->objects[0].pos.z -= 0.1;
+		window->objects[4].dir.z -= 0.3;
 	if (window->currentkeystates[SDL_SCANCODE_D]) 	
-		window->objects[0].pos.x += 0.1;
+		window->objects[4].dir.x += 0.3;
 	if (window->currentkeystates[SDL_SCANCODE_A]) 	
-		window->objects[0].pos.x -= 0.1;
+		window->objects[4].dir.x -= 0.3;
 }
 
 
