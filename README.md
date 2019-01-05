@@ -48,7 +48,11 @@ Structure of our basic program will be the next:
 Literature:
 ---
 Shapes: https://graphics.stanford.edu/courses/cs348b-16-spring-content/lectures/02_rt1/02_rt1_slides.pdf
+
+Intersections with cone: http://lousodrome.net/blog/light/2017/01/03/intersection-of-a-ray-and-a-cone/
+
 Intersections with cone and cylinder : https://mrl.nyu.edu/~dzorin/rend05/lecture2.pdf
+
 Raytracing concept and how to calculate the ray: https://www.khanacademy.org/partner-content/pixar/rendering/rendering1/a/start-here-rendering
 
 All needed info about RT in one place: http://cosinekitty.com/raytrace/contents.html
