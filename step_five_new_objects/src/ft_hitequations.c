@@ -49,9 +49,6 @@ void				plane(t_ray ray, t_objects *object)
 	par.a = 0;
 	par.b = 0;
 	par.c = 0;
-//	normal.x = 0.4;
-//	normal.y = 0.0;
-//	normal.z = 1.0;
 	object->hit.t = -((ft_dot(ft_subtract_vectors(ray.camera, object->pos), object->dir))/(ft_dot(ray.point, object->dir)));
 	object->hit.p = ft_point_at_parameter(object->hit.t, ray.camera, ray.point);
 	if (object->hit.t >= 0)
