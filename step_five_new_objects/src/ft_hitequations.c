@@ -71,14 +71,13 @@ void				cone(t_ray ray, t_objects *object)
 	square_equation	par;
 
 	tip.x = object->pos.x;
-	tip.y = object->pos.y + 0.2;
+	tip.y = object->pos.y + 0.6;
 	tip.z = object->pos.z;
 	height = ft_length(ft_subtract_vectors(object->pos, tip));
 	float A = ray.camera.x - object->pos.x;
     float B = ray.camera.z - object->pos.z;
     float D = height - ray.camera.y + object->pos.y;
-    
-    float tan = (0.3 / height) * (0.3 / height);
+    float tan = (0.2 / height) * (0.2 / height);
     
     float a = (ray.point.x * ray.point.x) + (ray.point.z * ray.point.z) - (tan*(ray.point.y * ray.point.y));
     float b = (2*A*ray.point.x) + (2*B*ray.point.z) + (2*tan*D*ray.point.y);
@@ -107,13 +106,17 @@ void				cone(t_ray ray, t_objects *object)
     
     if ((r > object->pos.y) && (r < object->pos.y + height))
 	{
-		object->hit.t = tmp;
-		object->hit.true_fals = 1;	
+		object->hit.t = t;
+		object->hit.p = ft_point_at_parameter(object->hit.t, ray.camera, ray.point);
+		object->hit.true_fals = 1;
+	//	printf("%f\n", height);
+	//	printf("%f\n", A);
+   	//	printf("%f\n", B);
+   	//	printf("%f\n", D);	
 		return ;
 	}
     else
 	{
-		object->hit.t = tmp;
 		object->hit.true_fals = 0;
 		return ;
 	}

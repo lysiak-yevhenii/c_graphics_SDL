@@ -13,11 +13,11 @@ camera
 			location: <0.0, 0.0, 0.0>
 
 cone
-			location: <0.0, 0.2, -0.4>
+			location: <-0.2, 0.0, -2.0>
 
 sphere
 			color: <255, 255, 255>
-			location: <0.0, 0.0, -1.0>
+			location: <0.0, -0.1, -1.0>
 			direction: <-1.0, -10, 5>
 			angle: -10
 			radius: 0.2
