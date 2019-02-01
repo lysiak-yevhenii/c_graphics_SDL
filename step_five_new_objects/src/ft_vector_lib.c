@@ -99,11 +99,21 @@ vector_3			ft_get_point(double	t, vector_3	c, vector_3 p)
 	return (point);
 }
 
+vector_3			ft_vector_normal(vector_3 v)
+{
+	double		normal;
+	vector_3	result;
+	
+	normal = 1.0 / sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2));
+	result.x = v.x * normal;
+	result.y = v.y * normal;
+	result.z = v.z * normal;
+	return (result);
+}
 
 double				ft_length(vector_3 v)
 {
-	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+	return (sqrt(fabs(v.x * v.x) + fabs(v.y * v.y) + fabs(v.z * v.z)));
 }
-
 
 

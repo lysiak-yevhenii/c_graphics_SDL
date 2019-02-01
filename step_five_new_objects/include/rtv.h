@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/01/03 17:46:23 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/01/28 04:18:00 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,10 @@ double				ft_dot(vector_3 v1, vector_3 v2);
 
 //intersection functions
 
-void					sphere(t_ray ray, t_objects *object);
+void				sphere(t_ray ray, t_objects *object);
 void				plane(t_ray ray, t_objects *object);
+void				cone(t_ray ray, t_objects *object);
+vector_3			ft_vector_normal(vector_3 v);
 vector_3			ft_point_at_parameter(double t, vector_3 c, vector_3 p);
 vector_3			ft_get_point(double t, vector_3 c, vector_3 p);
 vector_3			ft_add_vectors(vector_3 v1, vector_3 v2);

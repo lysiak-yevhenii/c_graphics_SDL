@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:10:55 by ylisyak           #+#    #+#             */
-/*   Updated: 2018/12/29 21:35:04 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/01/06 17:36:24 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -443,7 +443,6 @@ void	ft_camera_param(t_win *window, char *line)
 		line++;
 	if (ft_isalpha(*line))
 	{
-		printf("HERE");
 		if (ft_strncmp(line, "location", ft_strlen_until(line, ':')) == 0)
 			ft_get_location_for_camera(window, line);
 	}
