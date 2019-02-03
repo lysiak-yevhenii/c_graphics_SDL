@@ -56,3 +56,7 @@ Intersections with cone and cylinder : https://mrl.nyu.edu/~dzorin/rend05/lectur
 Raytracing concept and how to calculate the ray: https://www.khanacademy.org/partner-content/pixar/rendering/rendering1/a/start-here-rendering
 
 All needed info about RT in one place: http://cosinekitty.com/raytrace/contents.html
+
+Ray tracing primitives: https://www.cl.cam.ac.uk/teaching/1999/AGraphHCI/SMAG/node2.html
+
+Visualization of shape equations: https://www.geogebra.org/3d
