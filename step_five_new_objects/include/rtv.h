@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/01/28 04:18:00 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/02 17:18:03 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ double				ft_degree_to_radian(int input_degree);
 double				ft_dot(vector_3 v1, vector_3 v2);
 
 //intersection functions
-
+void				cylinder(t_ray ray, t_objects *object);
 void				sphere(t_ray ray, t_objects *object);
 void				plane(t_ray ray, t_objects *object);
 void				cone(t_ray ray, t_objects *object);

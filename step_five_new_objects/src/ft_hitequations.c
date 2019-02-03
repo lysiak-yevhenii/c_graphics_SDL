@@ -57,7 +57,69 @@ void				plane(t_ray ray, t_objects *object)
 }
 
 
+void				cylinder(t_ray ray, t_objects *object)
+{
+	double			height; 
+	double			tmp;
+	double			tmpcov;
+	vector_3		axis;
+	vector_3		tip;
+	vector_3 		oc;
+	vector_3		cp;
+	square_equation	par;
 
+	tip.x = object->pos.x;
+	tip.y = object->pos.y + 0.6;
+	tip.z = object->pos.z;
+	height = ft_length(ft_subtract_vectors(object->pos, tip));
+	float A = ray.camera.x - object->pos.x;
+    float B = ray.camera.z - object->pos.z;
+    float D = height - ray.camera.y + object->pos.y;
+    
+    float a = (ray.point.x * ray.point.x) + (ray.point.z * ray.point.z);
+    float b = (2*A*ray.point.x) + (2*B*ray.point.z);
+    float c = (A*A) + (B*B) - 0.2;
+    
+    float delta = b*b - 4*(a*c);
+//	if(fabs(delta) < 0.001)
+//	{
+//		object->hit.true_fals = 0;
+//		return;
+//	}	
+    if(delta < 0.0) 
+	{
+		object->hit.true_fals = 0;
+		return;	
+	}
+    
+    float t1 = (-b - sqrt(delta))/(2*a);
+    float t2 = (-b + sqrt(delta))/(2*a);
+    float t;
+    
+    if (t1>t2) t = t2;
+    else t = t1;
+    
+    float r = ray.camera.y + t*ray.point.y;
+    
+    if ((r > object->pos.y) && (r < (object->pos.y + height)))
+	{
+		printf("%f\n", r);
+		object->hit.t = t;
+		object->hit.p = ft_point_at_parameter(object->hit.t, ray.camera, ray.point);
+		object->hit.true_fals = 1;
+	//	printf("%f\n", height);
+	//	printf("%f\n", A);
+   	//	printf("%f\n", B);
+   	//	printf("%f\n", D);	
+		return ;
+	}
+	else
+	{		
+		object->hit.true_fals = 0;
+		return ;
+	}
+
+}
 
 void				cone(t_ray ray, t_objects *object)
 {

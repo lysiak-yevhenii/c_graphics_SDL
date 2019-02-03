@@ -12,7 +12,7 @@
 camera
 			location: <0.0, 0.0, 0.0>
 
-cone
+cylinder
 			location: <-0.2, 0.0, -2.0>
 
 sphere
@@ -22,7 +22,8 @@ sphere
 			angle: -10
 			radius: 0.2
 
-
+cone
+			location: <-0.3, 0.0, -2.0>
 
 //sphere
 //			color: <255, 255, 255>
@@ -49,9 +50,9 @@ sphere
 //			location: <0.0, 0.0, -1.0>
 //			direction: <0.0, 0.1, 1.0>
 
-//plane
-//			location: <-0.5, 0.0, -1.0>
-//			direction: <0.1, 0.0, 0.0>
+plane
+			location: <-0.5, 0.0, -1.0>
+			direction: <0.1, 0.0, 0.0>
 
 //plane
 //			location: <0.5, 0.0, -1.0>

@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/03 20:10:53 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/01/30 00:08:41 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/02 17:15:15 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void		ft_distirbutor(t_win *window)
 			window->objects[obj_iter].inter_fun = plane;
 		else if (ft_strcmp(window->objects[obj_iter].name, "cone") == 0)
 			window->objects[obj_iter].inter_fun = cone;
+		else if (ft_strcmp(window->objects[obj_iter].name, "cylinder") == 0)
+			window->objects[obj_iter].inter_fun = cylinder;
 		printf("Error");
 		obj_iter++;
 	}	
