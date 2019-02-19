@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/19 19:18:47 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 19:28:35 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct		s_thread
 	int				id;
 	int				partiterstart;
 	int				partiterend;
+	t_win			window;
 }					t_thread;
 
 
