@@ -6,7 +6,7 @@
 #    By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/03 19:58:25 by ylisyak           #+#    #+#              #
-#    Updated: 2019/02/19 19:16:44 by ylisyak          ###   ########.fr        #
+#    Updated: 2019/02/19 22:21:04 by ylisyak          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC		=	main.c \
 			ft_hitequations.c \
 			ft_controller.c \
 			ft_thread_start.c \
-		    ft_init_mlx.c 	
+		    ft_init_mlx.c \
+			ft_interface_support.c	
 
 OBJ_P = $(addprefix $(OBJ_PTH), $(SRC:.c=.o))
 SCR_P = $(addprefix $(SRC_PTH), $(SRC))

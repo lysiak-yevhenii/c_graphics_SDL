@@ -7,9 +7,8 @@ int			ft_init_mlx(t_win *wind)
 	wind->img = mlx_new_image(wind->mlx, SCREEN_W, SCREEN_H);
 	wind->img2 = mlx_get_data_addr(wind->img, &(wind->bps), \
 	&(wind->size), &(wind->endian));
-
-
-//	ft_key_event(wind);
-//	mlx_loop(wind->mlx);
+	printf("WINDSIZE: %d\n", wind->size);
+	printf("WINDENDIAN:%d\n", wind->endian);
+	printf("WINDBPS:%d\n", wind->bps);
 	return (1);
 }

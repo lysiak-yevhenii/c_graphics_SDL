@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/19 19:43:03 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 22:21:24 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ vector_3		trace_ray(t_ray ray, t_win	*window)
 	return (ft_add_vectors(ft_multiply_scalar(set, (1.0 - t)), ft_multiply_scalar(point, t)));
 }
 
+
 void			init_canvas(t_win *window)
 {
 	window->canvas.lower_left_corner.x = -1.0;
@@ -120,14 +121,11 @@ void			init_canvas(t_win *window)
 
 void			ft_core(t_win *window)
 {
-
-	window->cores = 4;
+	window->cores = CORES;
 	window->coreh = (int)(SCREEN_H / window->cores);
 	window->statement = 1;
 	init_canvas(window);
-	while (window->statement)
-	{
-		start(window);
-		mlx_put_image_to_window(window->mlx, window->win, window->img, 0, 0);
-	}
+	start(window);
+	mlx_put_image_to_window(window->mlx, window->win, window->img, 0, 0);	
+	mlx_loop(window->mlx);
 }

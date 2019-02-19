@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_drawing_bpx.c                                   :+:      :+:    :+:   */
+/*   ft_interface_support.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/11 20:44:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/19 22:24:34 by ylisyak          ###   ########.fr       */
+/*   Created: 2019/02/19 20:07:17 by ylisyak           #+#    #+#             */
+/*   Updated: 2019/02/19 20:07:20 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/rtv.h" 
+#include "../include/rtv.h"
 
-void				ft_pixel_put(int x, int y, unsigned int color, t_win *wind)
-	{
-	*((int*)(wind->img2 + ((y * wind->size) + (x * 4)))) = color; 
-}
 
-unsigned int		ft_rgb(int r, int g, int b)
+int			exit_x(void)
 {
-	unsigned int	result;
-
-	result = 0;
-	result = r + (g << 8) + (b << 16);
-	return (result);
+	exit(1);
 }

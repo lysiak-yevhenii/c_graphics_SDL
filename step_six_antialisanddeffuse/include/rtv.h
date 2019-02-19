@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/19 19:28:35 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 22:23:45 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # 	include "../libft/libft.h"
 # 	include </usr/local/include/mlx.h>
 
-#define CORE	 8
+#define CORES	8
 #define	SCREEN_W 1200
 #define	SCREEN_H 780
 
@@ -104,8 +104,7 @@ typedef struct		s_win
 	//////////////////////
 	t_objects		camera;
 	t_objects		*objects;
-	t_canvas		canvas;	
-	
+	t_canvas		canvas;		
 	int				iter_closer;
 	int				statement;
 	int				objects_amount;
@@ -125,6 +124,7 @@ typedef struct		s_thread
 	int				id;
 	int				partiterstart;
 	int				partiterend;
+	void			*img2;
 	t_win			window;
 }					t_thread;
 
@@ -139,7 +139,7 @@ int				ft_init_mlx(t_win *wind);
 //initialize main_surface 
 int					ft_init_sdl(t_win *window);
 //Fill pixels of surface;
-void				ft_pixel_put(int x, int y, size_t color, t_win *wind);
+void				ft_pixel_put(int x, int y, unsigned int color, t_win *wind);
 unsigned int		ft_rgb(int r, int g, int b);
 
 //Vector lib function
@@ -152,12 +152,12 @@ double				ft_dot(vector_3 v1, vector_3 v2);
 //Send ray
 vector_3			trace_ray(t_ray ray, t_win *window);
 
-//intersection functions
+//Intersection functions
 void				cylinder(t_ray ray, t_objects *object);
 void				sphere(t_ray ray, t_objects *object);
 void				plane(t_ray ray, t_objects *object);
 void				cone(t_ray ray, t_objects *object);
-//vector and rays lib
+//Vector and rays lib
 t_ray 				ft_setray(vector_3 camera, vector_3 point);
 vector_3			ft_vector_normal(vector_3 v);
 vector_3			ft_point_at_parameter(double t, vector_3 c, vector_3 p);
@@ -168,10 +168,15 @@ vector_3            ft_subtract_vectors(vector_3 v1, vector_3 v2);
 vector_3            ft_unit_vector(vector_3 v);
 vector_3            ft_mag_dir_vector(int magnitude, int angle_xy, int angle_xz);
 //Actions	
+void				ft_key_event(t_win *wind);
 
+//Keyboard
+int					ft_keyboard(int key, t_win *wind);
+
+//Interface action
+int					exit_x(void);
 
 //Controller
-void				ft_keyboard(t_win *window);
 void				ft_keyevent_up(t_win *widnow);
 void				ft_keyevent_down(t_win *window);
 
