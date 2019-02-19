@@ -12,6 +12,9 @@ void			trace(t_thread *arg_th)
 	ft_multiply_scalar(arg_th->window.canvas.horizontal, arg_th->u)),\
 	ft_multiply_scalar(arg_th->window.canvas.vertical, arg_th->v)));
 	vector_3 color = trace_ray(ray, &arg_th->window);
+	color.x = 100;
+	color.y = 200;
+	color.z = 10;
 	colors.r = color.x * 255.99;
 	colors.g = color.y * 255.99;
 	colors.b = color.z * 255.99;
