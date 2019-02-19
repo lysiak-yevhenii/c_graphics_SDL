@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/19 19:19:46 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 19:43:03 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,6 @@ void			ft_core(t_win *window)
 	while (window->statement)
 	{
 		start(window);
-
+		mlx_put_image_to_window(window->mlx, window->win, window->img, 0, 0);
 	}
 }
