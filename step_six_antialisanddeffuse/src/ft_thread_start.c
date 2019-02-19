@@ -1,41 +1,45 @@
 #include "../include/rtv.h"
 
-void			trace(t_thread *arg_th)
+void			trace(t_thread *arg_th, int x, int y)
 {
 	t_ray 			ray;
 	t_color			colors;
+	float 			u;
+	float			v;
+	vector_3		color;
 
-	arg_th->u = (float)arg_th->x / SCREEN_W;	
-	arg_th->v = (float)arg_th->partiterstart / SCREEN_H;
+	u = (float)x / SCREEN_W;
+	v = (float)y / SCREEN_H;
 	ray = ft_setray(arg_th->window.camera.pos, \
 	ft_add_vectors(ft_add_vectors(arg_th->window.canvas.lower_left_corner,\
-	ft_multiply_scalar(arg_th->window.canvas.horizontal, arg_th->u)),\
-	ft_multiply_scalar(arg_th->window.canvas.vertical, arg_th->v)));
-	vector_3 color = trace_ray(ray, &arg_th->window);
+	ft_multiply_scalar(arg_th->window.canvas.horizontal, u)),\
+	ft_multiply_scalar(arg_th->window.canvas.vertical, v)));
+	color = trace_ray(ray, &arg_th->window);
 	colors.r = color.x * 255.99;
 	colors.g = color.y * 255.99;
 	colors.b = color.z * 255.99;
-	ft_pixel_put(arg_th->x, arg_th->partiterstart, ft_rgb(colors.b, colors.g, colors.r), &arg_th->window);
+	ft_pixel_put(x, y, ft_rgb(colors.b, colors.g, colors.r), &arg_th->window);
 }
 
-void			*render(void * volatile arg)
+void			*render(t_thread *arg_th)
 {
-	t_thread	*arg_th;
+	int			yn;
+	int			ys;
+	int			x;
 
-	arg_th = (t_thread*)arg;
-	arg_th->partiterstart = arg_th->id * arg_th->window.coreh;
-	arg_th->partiterend = arg_th->partiterstart + arg_th->window.coreh;
-	printf("Start %d, id%d\n", arg_th->partiterstart, arg_th->id);
-	printf("END %d, id%d\n", arg_th->partiterend, arg_th->id);
-	while (arg_th->partiterstart < arg_th->partiterend)
+	ys = arg_th->id * arg_th->window.coreh;
+	yn = ys + arg_th->window.coreh;
+	printf("Start %d, id%d\n", ys, arg_th->id);
+	printf("END %d, id%d\n", yn, arg_th->id);
+	while (ys < yn)
 	{
-		arg_th->x = 0;
-		while (arg_th->x < SCREEN_W)
+		x = 0;
+		while (x < SCREEN_W)
 		{
-			trace(arg_th);			
-			arg_th->x++;
+			trace(arg_th, x, ys);			
+			x++;
 		}	
-		arg_th->partiterstart++;
+		ys++;
 	}
 	pthread_exit(0);
 }
@@ -50,12 +54,11 @@ void		start(t_win *wind)
 	i = 0;
 	while (i < wind->cores)
 	{
-	printf("suka\n");	
 		arg[i].id = i;
 		arg[i].window = *wind;
 		arg[i].img2 = wind->img2;
 		pthread_create(&pt[i], NULL, \
-				render, (void *)&(arg[i]));
+				((void*(*)(void*))render), (void *)&(arg[i]));
 		i++;
 	}
 	i = wind->cores - 1;

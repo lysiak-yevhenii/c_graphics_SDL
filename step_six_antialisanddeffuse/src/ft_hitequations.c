@@ -1,6 +1,6 @@
 #include "../include/rtv.h"
 
-void				sphere(t_ray ray, t_objects *object)
+void				sphere(t_ray ray, t_objects *object, hit_record *tmp_hit)
 {
 	float			tmp;
 	vector_3		oc;
@@ -20,26 +20,26 @@ void				sphere(t_ray ray, t_objects *object)
 		tmp = (-par.b - sqrt(par.discriminant))/(par.a);
 		if (tmp < ray.t_max && tmp > ray.t_min)
 		{
-			object->hit.t = tmp;
-			object->hit.p = ft_point_at_parameter(tmp, ray.camera, ray.point);
-			object->hit.n = ft_multiply_scalar(ft_subtract_vectors(object->hit.p, object->pos), (1 / object->radius));			
-			object->hit.true_fals = 1;
+			tmp_hit->t = tmp;
+			tmp_hit->p = ft_point_at_parameter(tmp, ray.camera, ray.point);
+			tmp_hit->n = ft_multiply_scalar(ft_subtract_vectors(tmp_hit->p, object->pos), (1 / object->radius));			
+			tmp_hit->true_fals = 1;
 			return ;
 		}
 		tmp = (-par.b + sqrt(par.discriminant))/(par.a);
 		if (tmp < ray.t_max && tmp > ray.t_min)
 		{
-			object->hit.t = tmp;
-			object->hit.p = ft_point_at_parameter(tmp, ray.camera, ray.point);
-			object->hit.n = ft_multiply_scalar(ft_subtract_vectors(object->hit.p, object->pos), (1 / object->radius));
-			object->hit.true_fals = 1;
+			tmp_hit->t = tmp;
+			tmp_hit->p = ft_point_at_parameter(tmp, ray.camera, ray.point);
+			tmp_hit->n = ft_multiply_scalar(ft_subtract_vectors(tmp_hit->p, object->pos), (1 / object->radius));
+			tmp_hit->true_fals = 1;
 		}
 	}
 	else
-		object->hit.true_fals = 0;
+		tmp_hit->true_fals = 0;
 }
 
-void				plane(t_ray ray, t_objects *object)
+void				plane(t_ray ray, t_objects *object, hit_record *tmp_hit)
 {
 //	vector_3		plane;
 //	vector_3		normal;
@@ -48,16 +48,16 @@ void				plane(t_ray ray, t_objects *object)
 	par.a = 0;
 	par.b = 0;
 	par.c = 0;
-	object->hit.t = -((ft_dot(ft_subtract_vectors(ray.camera, object->pos), object->dir))/(ft_dot(ray.point, object->dir)));
-	object->hit.p = ft_point_at_parameter(object->hit.t, ray.camera, ray.point);
-	if (object->hit.t >= 0)
-		object->hit.true_fals = 1;
+	tmp_hit->t = -((ft_dot(ft_subtract_vectors(ray.camera, object->pos), object->dir))/(ft_dot(ray.point, object->dir)));
+	tmp_hit->p = ft_point_at_parameter(tmp_hit->t, ray.camera, ray.point);
+	if (tmp_hit->t >= 0)
+		tmp_hit->true_fals = 1;
 	else
-		object->hit.true_fals = 0;	
+		tmp_hit->true_fals = 0;	
 }
 
 
-void				cylinder(t_ray ray, t_objects *object)
+void				cylinder(t_ray ray, t_objects *object, hit_record *tmp_hit)
 {
 	double			height; 
 //	double			tmp;
@@ -83,7 +83,7 @@ void				cylinder(t_ray ray, t_objects *object)
     float delta = b*b - 4*(a*c);	
     if(delta < 0.0) 
 	{
-		object->hit.true_fals = 0;
+		tmp_hit->true_fals = 0;
 		return;	
 	}
     
@@ -98,20 +98,20 @@ void				cylinder(t_ray ray, t_objects *object)
     
     if ((r > object->pos.y) && (r < (object->pos.y + height)))
 	{
-		object->hit.t = t;
-		object->hit.p = ft_point_at_parameter(object->hit.t, ray.camera, ray.point);
-		object->hit.true_fals = 1;
+		tmp_hit->t = t;
+		tmp_hit->p = ft_point_at_parameter(tmp_hit->t, ray.camera, ray.point);
+		tmp_hit->true_fals = 1;
 		return ;
 	}
 	else
 	{		
-		object->hit.true_fals = 0;
+		tmp_hit->true_fals = 0;
 		return ;
 	}
 
 }
 
-void				cone(t_ray ray, t_objects *object)
+void				cone(t_ray ray, t_objects *object, hit_record *tmp_hit)
 {
 	double			height; 
 //	double			tmp;
@@ -138,12 +138,12 @@ void				cone(t_ray ray, t_objects *object)
     float delta = b*b - 4*(a*c);
 	if(fabs(delta) < 0.001)
 	{
-		object->hit.true_fals = 0;
+		tmp_hit->true_fals = 0;
 		return;
 	}	
     if(delta < 0.0)
 	{
-		object->hit.true_fals = 0;
+		tmp_hit->true_fals = 0;
 		return;	
 	}
     
@@ -158,14 +158,14 @@ void				cone(t_ray ray, t_objects *object)
     
     if ((r > object->pos.y) && (r < object->pos.y + height))
 	{
-		object->hit.t = t;
-		object->hit.p = ft_point_at_parameter(object->hit.t, ray.camera, ray.point);
-		object->hit.true_fals = 1;
+		tmp_hit->t = t;
+		tmp_hit->p = ft_point_at_parameter(tmp_hit->t, ray.camera, ray.point);
+		tmp_hit->true_fals = 1;
 		return ;
 	}
     else
 	{
-		object->hit.true_fals = 0;
+		tmp_hit->true_fals = 0;
 		return ;
 	}
 

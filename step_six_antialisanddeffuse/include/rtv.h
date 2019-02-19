@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/19 22:23:45 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 23:46:00 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # 	include "../libft/libft.h"
 # 	include </usr/local/include/mlx.h>
 
-#define CORES	8
+#define CORES	3
 #define	SCREEN_W 1200
 #define	SCREEN_H 780
 
@@ -153,10 +153,10 @@ double				ft_dot(vector_3 v1, vector_3 v2);
 vector_3			trace_ray(t_ray ray, t_win *window);
 
 //Intersection functions
-void				cylinder(t_ray ray, t_objects *object);
-void				sphere(t_ray ray, t_objects *object);
-void				plane(t_ray ray, t_objects *object);
-void				cone(t_ray ray, t_objects *object);
+void				cylinder(t_ray ray, t_objects *object, hit_record *tmp_hit);
+void				sphere(t_ray ray, t_objects *object, hit_record *tmp_hit);
+void				plane(t_ray ray, t_objects *object, hit_record *tmp_hit);
+void				cone(t_ray ray, t_objects *object, hit_record *tmp_hit);
 //Vector and rays lib
 t_ray 				ft_setray(vector_3 camera, vector_3 point);
 vector_3			ft_vector_normal(vector_3 v);

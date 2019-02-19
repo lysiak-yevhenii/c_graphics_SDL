@@ -6,22 +6,22 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/19 22:21:24 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/20 00:52:36 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rtv.h"
 
-int			ft_iter(t_ray *ray, t_objects *obj, int (*f)(t_ray, t_objects *))
+int			ft_iter(t_ray *ray, t_objects *obj, hit_record *tmp_hit, int (*f)(t_ray, t_objects *, hit_record *))
 {
-	return ((*f)(*ray, obj));
+	return ((*f)(*ray, obj, tmp_hit));
 }
 
-int			ft_closer_obj(t_ray ray, t_win *window)
+int			ft_closer_obj(t_ray ray, t_win *window, hit_record *tmp)
 {
-	hit_record	tmp_rec;
+	hit_record	tmp_rec[window->objects_amount];
 	int			obj_iter;
-	double		hit;
+	int			hit;
 	double		t_max;
 	(void)t_max;
 	(void)tmp_rec;	
@@ -31,18 +31,18 @@ int			ft_closer_obj(t_ray ray, t_win *window)
 	obj_iter = 0;	
 	while (obj_iter < window->objects_amount - 1)
 	{
-		ft_iter(&ray, &window->objects[obj_iter], window->objects[obj_iter].inter_fun);
+		ft_iter(&ray, &window->objects[obj_iter], &((hit_record*)tmp_rec)[obj_iter], window->objects[obj_iter].inter_fun);
 		obj_iter++;
 	}
 	while (obj_iter--)
 	{
-		if (window->objects[obj_iter].hit.t < ray.t_max && window->objects[obj_iter].hit.true_fals == 1)
+		if (tmp_rec[obj_iter].t < ray.t_max && tmp_rec[obj_iter].true_fals == 1)
 		{
-			ray.t_max = window->objects[obj_iter].hit.t;
-			window->iter_closer = obj_iter;
+			ray.t_max = tmp_rec[obj_iter].t;
+			*tmp = tmp_rec[obj_iter];
 			hit = 1;
 		}
-	}	
+	}
 	return (hit);
 }	
 
@@ -70,10 +70,9 @@ vector_3		ft_random_unit()
 
 vector_3		trace_ray(t_ray ray, t_win	*window)
 {
-	//vector_3 n;
-	//return (n);
-	double		t;
 
+	double		t;
+	hit_record 	tmp;
 	vector_3	point;
 	vector_3	set;
 
@@ -89,9 +88,9 @@ vector_3		trace_ray(t_ray ray, t_win	*window)
 	point.x = 0.5;
 	point.y = 0.7;
 	point.z = 1.0;
-	if (ft_closer_obj(ray, window))
+	if (ft_closer_obj(ray, window, &tmp))
 	{
-		t = window->objects[window->iter_closer].hit.t;
+		t = tmp.t;//window->objects[window->iter_closer].hit.t;
 		n = ft_unit_vector(ft_subtract_vectors(ft_point_at_parameter(t, ray.camera, ray.point), window->objects[window->iter_closer].pos));
 		to_return.x = n.x + 1;
 		to_return.y = n.y + 1;

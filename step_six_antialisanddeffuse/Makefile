@@ -6,7 +6,7 @@
 #    By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/03 19:58:25 by ylisyak           #+#    #+#              #
-#    Updated: 2019/02/19 22:21:04 by ylisyak          ###   ########.fr        #
+#    Updated: 2019/02/20 00:53:07 by ylisyak          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ $(OBJ_PTH)%.o:$(SRC_PTH)%.c
 	gcc -Wall -Werror -Wextra -c -o $@ $< -I libft
 
 clean:
-	rm -f *.o
+	rm -f $(OBJ_PTH)*.o
 	make -C ./libft clean
 
 fclean: clean
