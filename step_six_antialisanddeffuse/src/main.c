@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/03 20:10:53 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/02 17:15:15 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 19:15:38 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void		ft_distirbutor(t_win *window)
 
 int			main(int ac, char **av)
 {
-	int		objects_mount;
 	t_win	window;
 
 	ft_bzero(&window, sizeof(t_win));
@@ -65,7 +64,7 @@ int			main(int ac, char **av)
 		if ((window.objects_amount = ft_count_objects(av[1])))
 			if (ft_create_objects(&window))
 				if (ft_parsing(&window, av[1]))
-					if (ft_init_sdl(&window))
+					if (ft_init_mlx(&window))
 					{
 						ft_distirbutor(&window);
 						ft_core(&window);

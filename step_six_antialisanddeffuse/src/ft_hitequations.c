@@ -41,8 +41,8 @@ void				sphere(t_ray ray, t_objects *object)
 
 void				plane(t_ray ray, t_objects *object)
 {
-	vector_3		plane;
-	vector_3		normal;
+//	vector_3		plane;
+//	vector_3		normal;
 	square_equation par;
 
 	par.a = 0;
@@ -60,13 +60,13 @@ void				plane(t_ray ray, t_objects *object)
 void				cylinder(t_ray ray, t_objects *object)
 {
 	double			height; 
-	double			tmp;
-	double			tmpcov;
-	vector_3		axis;
+//	double			tmp;
+//	double			tmpcov;
+//	vector_3		axis;
 	vector_3		tip;
-	vector_3 		oc;
-	vector_3		cp;
-	square_equation	par;
+//	vector_3 		oc;
+//	vector_3		cp;
+//	square_equation	par;
 
 	tip.x = object->pos.x;
 	tip.y = object->pos.y + 0.6;
@@ -74,7 +74,7 @@ void				cylinder(t_ray ray, t_objects *object)
 	height = ft_length(ft_subtract_vectors(object->pos, tip));
 	float A = ray.camera.x - object->pos.x;
     float B = ray.camera.z - object->pos.z;
-    float D = height - ray.camera.y + object->pos.y;
+ //   float D = height - ray.camera.y + object->pos.y;
     
     float a = (ray.point.x * ray.point.x) + (ray.point.z * ray.point.z);
     float b = (2*A*ray.point.x) + (2*B*ray.point.z);
@@ -114,13 +114,13 @@ void				cylinder(t_ray ray, t_objects *object)
 void				cone(t_ray ray, t_objects *object)
 {
 	double			height; 
-	double			tmp;
-	double			tmpcov;
-	vector_3		axis;
+//	double			tmp;
+//	double			tmpcov;
+//	vector_3		axis;
 	vector_3		tip;
-	vector_3 		oc;
-	vector_3		cp;
-	square_equation	par;
+//	vector_3 		oc;
+//	vector_3		cp;
+//	square_equation	par;
 
 	tip.x = object->pos.x;
 	tip.y = object->pos.y + 0.6;

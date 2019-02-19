@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/19 17:24:09 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 19:19:46 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int			ft_closer_obj(t_ray ray, t_win *window)
 	hit_record	tmp_rec;
 	int			obj_iter;
 	double		hit;
-	double		t_closest;
 	double		t_max;
-	
+	(void)t_max;
+	(void)tmp_rec;	
 	hit = 0;
 	ray.t_max = 100.0;
 	ray.t_min = 0.0;
@@ -81,7 +81,8 @@ vector_3		trace_ray(t_ray ray, t_win	*window)
 	vector_3 	to_return;
 	vector_3 	n;
 	vector_3	loc;
-
+	(void)n;
+	(void)loc;
 	set.x = 1.0;
 	set.y = 1.0;
 	set.z = 1.0;
@@ -104,23 +105,6 @@ vector_3		trace_ray(t_ray ray, t_win	*window)
 	return (ft_add_vectors(ft_multiply_scalar(set, (1.0 - t)), ft_multiply_scalar(point, t)));
 }
 
-
-void		ft_move(t_win *window)
-{
-	if (window->currentkeystates[SDL_SCANCODE_W]) 	
-		window->objects[0].pos.y += 0.1;
-	if (window->currentkeystates[SDL_SCANCODE_S]) 	
-		window->objects[0].pos.y -= 0.1;
-	if (window->currentkeystates[SDL_SCANCODE_Q]) 	
-		window->objects[0].pos.z += 0.1;
-	if (window->currentkeystates[SDL_SCANCODE_E]) 	
-		window->objects[0].pos.z -= 0.1;
-	if (window->currentkeystates[SDL_SCANCODE_D]) 	
-		window->objects[0].pos.x += 0.1;
-	if (window->currentkeystates[SDL_SCANCODE_A]) 	
-		window->objects[0].pos.x -= 0.1;
-}
-
 void			init_canvas(t_win *window)
 {
 	window->canvas.lower_left_corner.x = -1.0;
@@ -132,27 +116,18 @@ void			init_canvas(t_win *window)
 	window->canvas.horizontal.x = 2.0;
 	window->canvas.horizontal.y = 0.0;
 	window->canvas.horizontal.z = 0.0;
-	window->operate_surface = SDL_CreateRGBSurface(0, \
-			SCREEN_W, SCREEN_H, 32, 0, 0, 0, 0);
-	window->operate_pix = window->operate_surface->pixels;
 }
 
 void			ft_core(t_win *window)
 {
-	int			dy;
-	t_ray		ray;
-	t_color		colors;
-	
-	window->cors = 4;
-	window->coreh = (int)(SCREEN_H / window->cors);
+
+	window->cores = 4;
+	window->coreh = (int)(SCREEN_H / window->cores);
 	window->statement = 1;
 	init_canvas(window);
 	while (window->statement)
 	{
-		ft_keyboard(window);
 		start(window);
-		SDL_Delay(10);
-		SDL_BlitSurface(window->operate_surface, NULL, window->main_surface, NULL);
-		SDL_UpdateWindowSurface(window->window);	
+
 	}
 }

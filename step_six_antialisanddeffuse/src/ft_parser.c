@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:10:55 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/01/06 17:36:24 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 18:39:34 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,8 +335,6 @@ void	ft_get_location(t_win *window, char *line, int id)
 
 void	ft_angle(t_win *window, char *line, int id)
 {
-	double			angle;
-
 	while (*line != '\0' && *line != '\n' && *line != ' ')
 	{	
 		if (ft_isdigit(*line) || *line == '-')

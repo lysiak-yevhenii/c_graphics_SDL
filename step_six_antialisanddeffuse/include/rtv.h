@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/19 01:43:35 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 19:18:47 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@
 #	include	<stdio.h>
 #	include <math.h>
 #	include <pthread.h>
-#	include "SDL.h"
-#	include "SDL_image.h"
-#	include "SDL_timer.h"
-#	include "SDL_ttf.h"
-#	include "SDL_mixer.h"
-#	include "SDL_thread.h"
+# 	include "../libft/libft.h"
+# 	include </usr/local/include/mlx.h>
 
 #define CORE	 8
 #define	SCREEN_W 1200
@@ -97,20 +93,24 @@ typedef struct		s_color
 
 typedef struct		s_win
 {
-	SDL_Window		*window;
-	SDL_Surface		*main_surface;
-	SDL_Surface		*operate_surface;
+	//MLX
+	int				endian;
+	int				size;
+	int				bps;
+	void			*mlx;
+	void			*win;
+	void			*img;
+	void			*img2;	
+	//////////////////////
 	t_objects		camera;
 	t_objects		*objects;
-	t_canvas		canvas;		
-	SDL_Event		controller;
+	t_canvas		canvas;	
+	
 	int				iter_closer;
-	const Uint8		*currentkeystates;
 	int				statement;
 	int				objects_amount;
-	uint32_t		*operate_pix;
 	//Thread core part
-	int				cors;
+	int				cores;
 	int				coreh;
 	
 }					t_win;
@@ -125,8 +125,6 @@ typedef struct		s_thread
 	int				id;
 	int				partiterstart;
 	int				partiterend;
-	t_win			*window;
-
 }					t_thread;
 
 
@@ -135,11 +133,12 @@ int				ft_count_objects(char *input);
 int				ft_create_objects(t_win *window);
 void			ft_core(t_win *window);
 
-//SDL initialize connection with CPU and allocate window
+//MLX initialize connection with CPU and allocate window
+int				ft_init_mlx(t_win *wind);
 //initialize main_surface 
 int					ft_init_sdl(t_win *window);
-//SDL fill pixels of surface;
-void				ft_draw_bpx(int x, int y, size_t color, SDL_Surface *img);
+//Fill pixels of surface;
+void				ft_pixel_put(int x, int y, size_t color, t_win *wind);
 unsigned int		ft_rgb(int r, int g, int b);
 
 //Vector lib function
@@ -168,7 +167,7 @@ vector_3            ft_subtract_vectors(vector_3 v1, vector_3 v2);
 vector_3            ft_unit_vector(vector_3 v);
 vector_3            ft_mag_dir_vector(int magnitude, int angle_xy, int angle_xz);
 //Actions	
-void				ft_move(t_win *window);
+
 
 //Controller
 void				ft_keyboard(t_win *window);

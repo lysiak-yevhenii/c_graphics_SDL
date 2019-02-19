@@ -6,79 +6,59 @@
 #    By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/03 19:58:25 by ylisyak           #+#    #+#              #
-#    Updated: 2019/02/18 23:57:07 by ylisyak          ###   ########.fr        #
+#    Updated: 2019/02/19 19:16:44 by ylisyak          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	rtv
-FLAGS		=	-Wall -Werror -Wextra
-INC_P		=	./inlcude/
-SRC_P		=	./src/
-OBJ_P		=	./tmp/
+NAME = rtv
 
-LIB_P		=	./libft/
-F_LIB		=	$(addprefix $(LIB_P), libft.a)
-F_INC		=	-I ./libft/
-F_LNK		=	-L ./libft -l ft
+CC =	gcc
+FG =	-lmlx -framework OpenGL -framework AppKit
+PTHL =	-L /usr/local/lib 
+PTHLS = -L ./libft/ -lft
+PTHH =	-I /usr/local/include
 
-SDL_P		=	./sdl/sdl2/2.0.8/lib/
-SDL_INC		=	-I ./sdl/sdl2/2.0.8/include/SDL2/
-SDL_LNK		=	-L ./sdl/sdl2/2.0.8/lib/ -l SDL2
-
-SDL_IMGP	=	./sdl/sdl2_image/2.0.3/lib/
-SDL_IMG_INC	=	-I ./sdl/sdl2_image/2.0.3/include/SDL2/
-SDL_IMG_LNK	=	-L ./sdl/sdl2_image/2.0.3/lib/ -l SDL2_image
-
-SDL_MIXP	=	./sdl/sdl2_mixer/2.0.2_3/lib/
-SDL_MIX_INC	=	-I ./sdl/sdl2_mixer/2.0.2_3/include/SDL2/
-SDL_MIX_LNK	=	-L ./sdl/sdl2_mixer/2.0.2_3/lib/ -l SDL2_mixer
-
-SDL_TTFP	=	./sdl/sdl2_ttf/2.0.14/lib/
-SDL_TTF_INC	=	-I ./sdl/sdl2_ttf/2.0.14/include/SDL2/
-SDL_TTF_LNK	=	-L ./sdl/sdl2_ttf/2.0.14/lib/ -l SDL2_ttf
+SRC_PTH = ./src/
+OBJ_PTH = ./obj/
 
 SRC		=	main.c \
 			ft_drawing_bpx.c \
 			ft_parser.c \
 			ft_core.c \
-			ft_init_sdl.c \
 			ft_error.c \
 			ft_vector_lib.c \
 			ft_hitequations.c \
 			ft_controller.c \
-			ft_thread_start.c 
+			ft_thread_start.c \
+		    ft_init_mlx.c 	
 
-OBJ_PS	=	$(addprefix $(OBJ_P), $(SRC:.c=.o))
+OBJ_P = $(addprefix $(OBJ_PTH), $(SRC:.c=.o))
+SCR_P = $(addprefix $(SRC_PTH), $(SRC))
 
-all:	tmp $(NAME)
+all: $(NAME)
 
-tmp:	libft
-	@mkdir -p $(OBJ_P)
+mlib:
+	make -C ./libft
+	mkdir -p $(OBJ_PTH)
 
-$(OBJ_P)%.o:$(SRC_P)%.c
-	@gcc $(F_INC) $(SDL_INC) $(SDL_IMG_INC) $(SDL_MIX_INC) $(SDL_TTF_INC) -I $(INC_P) -o $@ -c $<
+$(NAME): mlib $(OBJ_P)
+	$(CC) $(PTHH) $(OBJ_P) $(PTHL) $(FG) -o $(NAME) $(PTHLS) -I ./
 
-libft: 
-	@make -C $(LIB_P)
-	@printf ' 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 \n'
-	@printf ' 🃟 Libruary has been compiled and ready to use 🃟 \n'
-	@printf ' 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 \n'	
-
-$(NAME): $(OBJ_PS)
-	@gcc $(OBJ_PS) $(F_LNK) $(SDL_LNK) $(SDL_IMG_LNK) $(SDL_MIX_LNK) $(SDL_TTF_LNK) -o $(NAME)
+$(OBJ_PTH)%.o:$(SRC_PTH)%.c
+	gcc -Wall -Werror -Wextra -c -o $@ $< -I libft
 
 clean:
-	@rm -Rf $(OBJ_P)
-	@make -C $(LIB_P) clean	
-	@printf ' 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 \n'	
-	@printf ' 🃟        \033[91mObject files have been deleted      \033[0m 🃟 \n'
-	@printf ' 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 🃟 \n'	
+	rm -f *.o
+	make -C ./libft clean
 
 fclean: clean
-	@rm -fr .DS*
-	@rm -rf $(NAME)
-	@make -C $(LIB_P) fclean
-	@printf '                   \033[91mAll is clear!\033[0m \n'
+	rm -f $(NAME)
+	make -C ./libft fclean
 
-re:	fclean all
-.PHONY: libft sdl 
+re: fclean all
+
+
+
+.PHONY: all clean fclean re
+
+.NOTPARALLEL: all clean fclean re
