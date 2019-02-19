@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 18:18:18 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/17 21:44:33 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 17:24:09 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ vector_3		ft_random_unit()
 	return p;
 }
 
-vector_3		ft_color(t_ray ray, t_win	*window)
+vector_3		trace_ray(t_ray ray, t_win	*window)
 {
+	//vector_3 n;
+	//return (n);
 	double		t;
 
 	vector_3	point;
@@ -80,8 +82,6 @@ vector_3		ft_color(t_ray ray, t_win	*window)
 	vector_3 	n;
 	vector_3	loc;
 
-	vector_3	tangent;
-
 	set.x = 1.0;
 	set.y = 1.0;
 	set.z = 1.0;
@@ -91,15 +91,17 @@ vector_3		ft_color(t_ray ray, t_win	*window)
 	if (ft_closer_obj(ray, window))
 	{
 		t = window->objects[window->iter_closer].hit.t;
-	//	n = ft_unit_vector(ft_subtract_vectors(ft_point_at_parameter(t, ray.camera, ray.point), window->objects[window->iter_closer].pos));
-		tangent = ft_add_vectors(ft_add_vectors(window->objects[window->iter_closer].hit.p, n), ft_random_unit());
-		n = ft_multiply_scalar(ft_color(ft_setray(window->objects[window->iter_closer].hit.p, ft_subtract_vectors(tangent, window->objects[window->iter_closer].hit.p)), window) , 0.5);
+		n = ft_unit_vector(ft_subtract_vectors(ft_point_at_parameter(t, ray.camera, ray.point), window->objects[window->iter_closer].pos));
+		to_return.x = n.x + 1;
+		to_return.y = n.y + 1;
+		to_return.z = n.z + 1;
+		n = ft_multiply_scalar(to_return, 0.5);
 		return (n);
 	}
 	t = ray.t_max;
 	unit_direction = ft_unit_vector(ray.point);
 	t = 0.5 * (ray.point.y + 1.0);
-	return (ft_add_vectors(ft_multiply_scalar(set, (1.0 - t)), ft_multiply_scalar(point, t))); 
+	return (ft_add_vectors(ft_multiply_scalar(set, (1.0 - t)), ft_multiply_scalar(point, t)));
 }
 
 
@@ -119,84 +121,38 @@ void		ft_move(t_win *window)
 		window->objects[0].pos.x -= 0.1;
 }
 
-
-void			ft_core(t_win *window)
+void			init_canvas(t_win *window)
 {
-	float 		u;
-	float		v;
-
-	float		r;
-	float		g;
-	float		b;
-
-	int			x;
-	int			y;
-	int			dy;
-	t_ray		ray;
-	vector_3	origin;
-	vector_3	vertical;
-	vector_3	horizontal;
-	vector_3	lower_left_corner;
-	
-	lower_left_corner.x = -1.0;
-    lower_left_corner.y = -0.5;
-   	lower_left_corner.z = -0.5;
-
-	vertical.x = 0.0;
-	vertical.y = 1.0;      
-	vertical.z = 0.0;
-
-	horizontal.x = 2.0;
-	horizontal.y = 0.0;
-	horizontal.z = 0.0;
-
+	window->canvas.lower_left_corner.x = -1.0;
+    window->canvas.lower_left_corner.y = -0.5;
+   	window->canvas.lower_left_corner.z = -0.5;
+	window->canvas.vertical.x = 0.0;
+	window->canvas.vertical.y = 1.0;      
+	window->canvas.vertical.z = 0.0;
+	window->canvas.horizontal.x = 2.0;
+	window->canvas.horizontal.y = 0.0;
+	window->canvas.horizontal.z = 0.0;
 	window->operate_surface = SDL_CreateRGBSurface(0, \
 			SCREEN_W, SCREEN_H, 32, 0, 0, 0, 0);
 	window->operate_pix = window->operate_surface->pixels;
+}
+
+void			ft_core(t_win *window)
+{
+	int			dy;
+	t_ray		ray;
+	t_color		colors;
+	
+	window->cors = 4;
+	window->coreh = (int)(SCREEN_H / window->cors);
 	window->statement = 1;
+	init_canvas(window);
 	while (window->statement)
 	{
-		if (SDL_WaitEvent(&window->controller))
-		{
-			(window->controller.type == SDL_QUIT || \
-		window->controller.key.keysym.scancode == SDL_SCANCODE_ESCAPE) ? \
-							(window->statement = 0) : 0;
-		
-		window->currentkeystates = SDL_GetKeyboardState(NULL);
-		(window->currentkeystates[SDL_SCANCODE_W] || \
-		window->currentkeystates[SDL_SCANCODE_S] || \
-		window->currentkeystates[SDL_SCANCODE_D] || \
-		window->currentkeystates[SDL_SCANCODE_A] ||
-			window->currentkeystates[SDL_SCANCODE_E] ||
-				window->currentkeystates[SDL_SCANCODE_Q] ) ? ft_move(window) : 0;
-		(window->currentkeystates[SDL_SCANCODE_P]) ? (window->statement = 0) : 0;
-		}
-		x = 0;
-		dy = 0;
-		y = SCREEN_H - 1;
-		while (y >= 0)
-		{
-			x = 0;
-			while (x < SCREEN_W)
-			{
-				u = (float)((x + drand48()) / SCREEN_W);
-				v = (float)((y + drand48()) / SCREEN_H);
-				ray = ft_setray(window->camera.pos, \
-				ft_add_vectors(ft_add_vectors(lower_left_corner,\
-				ft_multiply_scalar(horizontal, u)),\
-				ft_multiply_scalar(vertical, v)));
-				vector_3 color = ft_color(ray, window);
-				r = color.x * 255.99;
-				g = color.y * 255.99;
-				b = color.z * 255.99;
-				window->operate_pix[x + dy * SCREEN_W] = ft_rgb(b, g, r);
-				x++;
-			}
-			y--;
-			dy++;
-		}
+		ft_keyboard(window);
+		start(window);
+		SDL_Delay(10);
 		SDL_BlitSurface(window->operate_surface, NULL, window->main_surface, NULL);
-		SDL_UpdateWindowSurface(window->window);
-	
+		SDL_UpdateWindowSurface(window->window);	
 	}
 }

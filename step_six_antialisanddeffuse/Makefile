@@ -6,7 +6,7 @@
 #    By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/03 19:58:25 by ylisyak           #+#    #+#              #
-#    Updated: 2018/12/28 20:14:05 by ylisyak          ###   ########.fr        #
+#    Updated: 2019/02/18 23:57:07 by ylisyak          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ SRC		=	main.c \
 			ft_error.c \
 			ft_vector_lib.c \
 			ft_hitequations.c \
+			ft_controller.c \
+			ft_thread_start.c 
 
 OBJ_PS	=	$(addprefix $(OBJ_P), $(SRC:.c=.o))
 

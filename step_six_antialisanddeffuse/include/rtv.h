@@ -6,7 +6,7 @@
 /*   By: ylisyak <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 15:02:11 by ylisyak           #+#    #+#             */
-/*   Updated: 2019/02/17 21:05:12 by ylisyak          ###   ########.fr       */
+/*   Updated: 2019/02/19 01:43:35 by ylisyak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 #	include <libft.h>
 #	include	<stdio.h>
 #	include <math.h>
+#	include <pthread.h>
 #	include "SDL.h"
 #	include "SDL_image.h"
 #	include "SDL_timer.h"
 #	include "SDL_ttf.h"
 #	include "SDL_mixer.h"
+#	include "SDL_thread.h"
 
+#define CORE	 8
 #define	SCREEN_W 1200
 #define	SCREEN_H 780
 
@@ -76,6 +79,22 @@ typedef struct		s_ray
 	vector_3		point;
 }					t_ray;
 
+typedef struct		s_canvas
+{
+	vector_3		origin;
+	vector_3		vertical;
+	vector_3		horizontal;
+	vector_3		lower_left_corner;
+}					t_canvas;
+
+typedef struct		s_color
+{
+	float			r;
+	float			g;
+	float			b;
+
+}					t_color;
+
 typedef struct		s_win
 {
 	SDL_Window		*window;
@@ -83,13 +102,33 @@ typedef struct		s_win
 	SDL_Surface		*operate_surface;
 	t_objects		camera;
 	t_objects		*objects;
+	t_canvas		canvas;		
 	SDL_Event		controller;
 	int				iter_closer;
 	const Uint8		*currentkeystates;
 	int				statement;
 	int				objects_amount;
 	uint32_t		*operate_pix;
+	//Thread core part
+	int				cors;
+	int				coreh;
+	
 }					t_win;
+
+typedef struct		s_thread
+{
+	int				dy;
+	float			u;
+	float			v;
+	int				x;
+	int				y;
+	int				id;
+	int				partiterstart;
+	int				partiterend;
+	t_win			*window;
+
+}					t_thread;
+
 
 int				ft_parsing(t_win *window, char *input);
 int				ft_count_objects(char *input);
@@ -110,6 +149,9 @@ double              ft_length(vector_3 v);
 double				ft_degree_to_radian(int input_degree);
 double				ft_dot(vector_3 v1, vector_3 v2);
 
+//Send ray
+vector_3			trace_ray(t_ray ray, t_win *window);
+
 //intersection functions
 void				cylinder(t_ray ray, t_objects *object);
 void				sphere(t_ray ray, t_objects *object);
@@ -125,10 +167,16 @@ vector_3            ft_multiply_scalar(vector_3 v1, double scalar);
 vector_3            ft_subtract_vectors(vector_3 v1, vector_3 v2);
 vector_3            ft_unit_vector(vector_3 v);
 vector_3            ft_mag_dir_vector(int magnitude, int angle_xy, int angle_xz);
+//Actions	
+void				ft_move(t_win *window);
 
 //Controller
+void				ft_keyboard(t_win *window);
 void				ft_keyevent_up(t_win *widnow);
 void				ft_keyevent_down(t_win *window);
+
+//Core
+void				start(t_win *window);
 
 void				ft_error_init_window(void);
 void				ft_error_render_quality(void);
